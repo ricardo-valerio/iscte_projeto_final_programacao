@@ -21,11 +21,11 @@ class Plant:
     def area_de_ocupacao_circular(self) -> float:
         return self.__especie.area_de_ocupacao_circular
 
-    def idade(self, ano_a_verificar) -> None or int:
+    def idade(self, ano_a_verificar) -> int:
         # perguntar aos profs qual a melhor forma de implementar
         if ano_a_verificar < self.__ano_plantacao:
             print(f"A planta só foi plantada em {self.__ano_plantacao}.")
-            return None
+            return 0
         return ano_a_verificar - self.__ano_plantacao
 
     def pertence_a_area_de_ocupacao_plantacao(self, dadas_as_coordenadas) -> bool:
