@@ -1,3 +1,5 @@
+from math import pi as math_pi
+
 class Species:
     def __init__(self,
                  nome: str,
@@ -38,8 +40,10 @@ class Species:
         return self.__num_medio_anos_vida
 
     @property
-    def area_de_ocupacao_circular(self) -> float:
-        return 3.14 * (self.__raio_max ** 2)
+    def area_de_ocupacao_circular(self) -> None:
+        # perguntar aos profs qual a melhor forma de implementar:
+        print(f"{math_pi * (self.__raio_max ** 2):.2f} m²")
+        # return math_pi * (self.__raio_max ** 2)
 
     def __str__(self):
         return f"Nome da espécie: {self.__nome}\n"                           \
