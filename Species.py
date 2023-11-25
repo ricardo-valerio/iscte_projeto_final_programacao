@@ -49,6 +49,9 @@ class Species:
                f"Raio máximo de ocupação: {self.__raio_max}\n"               \
                f"Número médio de anos de vida: {self.__num_medio_anos_vida}\n"
 
+    def __eq__(self, other):
+        return isinstance(other, Species) and self.__nome == other.__nome
+
 
 
 
@@ -78,3 +81,6 @@ print(species_3.area_de_ocupacao_circular)
 print(species_1)
 print(species_2)
 print(species_3)
+
+print("species_1 == species_2:", species_1 == species_2)
+
