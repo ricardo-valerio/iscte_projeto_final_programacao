@@ -41,6 +41,13 @@ class Species:
     def area_de_ocupacao_circular(self) -> float:
         return 3.14 * (self.__raio_max ** 2)
 
+    def __str__(self):
+        return f"Nome da espécie: {self.__nome}\n"                           \
+               f"Tipo de planta: {self.__tipo_planta}\n"                     \
+               f"Tipo de folhagem: {self.__tipo_folhagem}\n"                 \
+               f"Produz fruto?: {self.__produz_fruto}\n"                     \
+               f"Raio máximo de ocupação: {self.__raio_max}\n"               \
+               f"Número médio de anos de vida: {self.__num_medio_anos_vida}\n"
 
 
 
@@ -67,3 +74,7 @@ print(species_1.num_medio_anos_vida)
 print(species_1.area_de_ocupacao_circular)
 print(species_2.area_de_ocupacao_circular)
 print(species_3.area_de_ocupacao_circular)
+
+print(species_1)
+print(species_2)
+print(species_3)
