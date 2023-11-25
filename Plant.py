@@ -12,6 +12,10 @@ class Plant:
     def ano_plantacao(self):
         return self.__ano_plantacao
 
+    @property
+    def area_de_ocupacao(self):
+        return self.__especie.area_de_ocupacao_circular
+
     def __str__(self):
         return f"Nome da planta: {self.__especie.nome}\n"      \
                f"Localização GPS: {self.localizacao_coords}\n" \
