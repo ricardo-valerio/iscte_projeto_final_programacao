@@ -40,7 +40,7 @@ class Species:
         return self.__num_medio_anos_vida
 
     def area_de_ocupacao_circular(self) -> None:
-        return math_pi * (self.__raio_max ** 2)
+        return round(math_pi * (self.__raio_max ** 2), 2)
 
     def __str__(self) -> str:
         return f"Nome da espécie: {self.__nome}\n"                           \
