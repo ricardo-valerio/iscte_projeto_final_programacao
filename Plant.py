@@ -19,7 +19,7 @@ class Plant:
         return self.__ano_plantacao
 
     def area_de_ocupacao_circular(self) -> float:
-        return self.__especie.area_de_ocupacao_circular
+        return self.__especie.area_de_ocupacao_circular()
 
     def idade(self, ano_a_verificar) -> int:
         # perguntar aos profs qual a melhor forma de implementar
