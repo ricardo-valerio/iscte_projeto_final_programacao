@@ -40,3 +40,30 @@ class Species:
     @property
     def area_de_ocupacao_circular(self) -> float:
         return 3.14 * (self.__raio_max ** 2)
+
+
+
+
+
+species_1 = Species(
+    nome="castanheiro",
+    tipo_folhagem="caduca",
+    produz_fruto=True,
+    tipo_planta="árvore",
+    raio_max=8.1,
+    num_medio_anos_vida=100
+)
+
+species_2 = Species("cedro", "perene", False, "árvore", 1.5, 80)
+species_3 = Species("pinheiro manso", "perene", True, "árvore", 3.1, 100)
+
+print(species_1.nome)
+print(species_1.tipo_folhagem)
+print(species_1.produz_fruto)
+print(species_1.tipo_planta)
+print(species_1.raio_max)
+print(species_1.num_medio_anos_vida)
+
+print(species_1.area_de_ocupacao_circular)
+print(species_2.area_de_ocupacao_circular)
+print(species_3.area_de_ocupacao_circular)
