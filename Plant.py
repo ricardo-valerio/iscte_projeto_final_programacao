@@ -36,8 +36,8 @@ class Plant:
         return distancia < self.__especie.raio_max
 
     def __str__(self) -> str:
-        return f"Nome da planta: {self.__especie.nome}\n"      \
-               f"Localização GPS: {self.localizacao_coords}\n" \
+        return f"Nome da espécie da planta: {self.__especie.nome}\n"      \
+               f"Localização GPS: {self.localizacao_coords}\n"            \
                f"Ano de plantação: {self.__ano_plantacao}\n"
 
 
