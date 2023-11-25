@@ -5,7 +5,7 @@ class Plant:
     def __init__(self,
                  especie            : Species,
                  localizacao_coords : tuple[float, float],
-                 ano_plantacao      : int)                 :
+                 ano_plantacao      : int):
         self.__especie          = especie
         self.localizacao_coords = localizacao_coords
         self.__ano_plantacao    = ano_plantacao

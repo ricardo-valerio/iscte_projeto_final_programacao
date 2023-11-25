@@ -7,7 +7,7 @@ class Species:
                  produz_fruto        : bool,
                  tipo_planta         : str,
                  raio_max            : float,
-                 num_medio_anos_vida : int)   :
+                 num_medio_anos_vida : int):
         self.__nome                = nome
         self.__tipo_folhagem       = tipo_folhagem
         self.__produz_fruto        = produz_fruto
