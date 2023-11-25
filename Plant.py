@@ -2,38 +2,41 @@ from math import sqrt as math_sqrt
 from Species import *
 
 class Plant:
-    def __init__(self, especie, localizacao_coords, ano_plantacao):
-        self.__especie = especie
+    def __init__(self,
+                 especie            : Species,
+                 localizacao_coords : tuple[float, float],
+                 ano_plantacao      : int)                 :
+        self.__especie          = especie
         self.localizacao_coords = localizacao_coords
-        self.__ano_plantacao = ano_plantacao
+        self.__ano_plantacao    = ano_plantacao
 
     @property
-    def especie(self):
+    def especie(self) -> Species:
         return self.__especie
 
     @property
-    def ano_plantacao(self):
+    def ano_plantacao(self) -> int:
         return self.__ano_plantacao
 
     @property
-    def area_de_ocupacao(self):
+    def area_de_ocupacao(self) -> float:
         return self.__especie.area_de_ocupacao_circular
 
-    def idade(self, ano_a_verificar):
+    def idade(self, ano_a_verificar) -> None or int:
         # perguntar aos profs qual a melhor forma de implementar
         if ano_a_verificar < self.__ano_plantacao:
             print(f"A planta só foi plantada em {self.__ano_plantacao}.")
             return None
         return ano_a_verificar - self.__ano_plantacao
 
-    def pertence_a_area_de_ocupacao_plantacao(self, dadas_as_coordenadas):
+    def pertence_a_area_de_ocupacao_plantacao(self, dadas_as_coordenadas) -> bool:
         distancia = math_sqrt(
             (self.localizacao_coords[0] - dadas_as_coordenadas[0])**2 +
             (self.localizacao_coords[1] - dadas_as_coordenadas[1])**2
         )
         return distancia < self.__especie.raio_max
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Nome da planta: {self.__especie.nome}\n"      \
                f"Localização GPS: {self.localizacao_coords}\n" \
                f"Ano de plantação: {self.__ano_plantacao}\n"
@@ -50,18 +53,18 @@ if __name__ == "__main__":
     """
 
     species_1 = Species(
-        nome="castanheiro",
-        tipo_folhagem="caduca",
-        produz_fruto=True,
-        tipo_planta="árvore",
-        raio_max=8.1,
-        num_medio_anos_vida=100
+        nome                = "castanheiro",
+        tipo_folhagem       = "caduca",
+        produz_fruto        = True,
+        tipo_planta         = "árvore",
+        raio_max            = 8.1,
+        num_medio_anos_vida = 100
     )
 
     plant_1 = Plant(
-        especie=species_1,
-        localizacao_coords=(10.0, 5.0),
-        ano_plantacao=2020
+        especie            = species_1,
+        localizacao_coords = (10.0, 5.0),
+        ano_plantacao      = 2020
     )
 
 
