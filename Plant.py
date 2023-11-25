@@ -16,6 +16,9 @@ class Plant:
     def area_de_ocupacao(self):
         return self.__especie.area_de_ocupacao_circular
 
+    def idade(self, ano_a_verificar):
+        return ano_a_verificar - self.__ano_plantacao
+
     def __str__(self):
         return f"Nome da planta: {self.__especie.nome}\n"      \
                f"Localização GPS: {self.localizacao_coords}\n" \
