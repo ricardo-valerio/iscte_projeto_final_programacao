@@ -39,11 +39,8 @@ class Species:
     def num_medio_anos_vida(self) -> int:
         return self.__num_medio_anos_vida
 
-    @property
     def area_de_ocupacao_circular(self) -> None:
-        # perguntar aos profs qual a melhor forma de implementar:
-        print(f"{math_pi * (self.__raio_max ** 2):.2f} m²")
-        # return math_pi * (self.__raio_max ** 2)
+        return math_pi * (self.__raio_max ** 2)
 
     def __str__(self) -> str:
         return f"Nome da espécie: {self.__nome}\n"                           \
@@ -87,9 +84,9 @@ if __name__ == "__main__":
     print(species_1.raio_max)
     print(species_1.num_medio_anos_vida)
 
-    print(species_1.area_de_ocupacao_circular)
-    print(species_2.area_de_ocupacao_circular)
-    print(species_3.area_de_ocupacao_circular)
+    print(species_1.area_de_ocupacao_circular())
+    print(species_2.area_de_ocupacao_circular())
+    print(species_3.area_de_ocupacao_circular())
 
     print(species_1)
     print(species_2)

@@ -18,8 +18,7 @@ class Plant:
     def ano_plantacao(self) -> int:
         return self.__ano_plantacao
 
-    @property
-    def area_de_ocupacao(self) -> float:
+    def area_de_ocupacao_circular(self) -> float:
         return self.__especie.area_de_ocupacao_circular
 
     def idade(self, ano_a_verificar) -> None or int:
@@ -74,7 +73,7 @@ if __name__ == "__main__":
 
     print("plant_1.localizacao_coords:", plant_1.localizacao_coords)
     print("plant_1.ano_plantacao:", plant_1.ano_plantacao)
-    print("plant_1.area_de_ocupacao:", plant_1.area_de_ocupacao)
+    print("plant_1.area_de_ocupacao_circular():", plant_1.area_de_ocupacao_circular())
 
     print("plant_1.idade(ano_a_verificar=2022):", plant_1.idade(ano_a_verificar=2022))
     print("plant_1.idade(ano_a_verificar=1904):", plant_1.idade(ano_a_verificar=1904))
