@@ -1,3 +1,6 @@
+from math import sqrt as math_sqrt
+from Species import *
+
 class Plant:
     def __init__(self, especie, localizacao_coords, ano_plantacao):
         self.__especie = especie
@@ -34,3 +37,44 @@ class Plant:
         return f"Nome da planta: {self.__especie.nome}\n"      \
                f"Localização GPS: {self.localizacao_coords}\n" \
                f"Ano de plantação: {self.__ano_plantacao}\n"
+
+
+
+if __name__ == "__main__":
+    """
+    Este if permite correr o ficheiro como um
+    script independente e as instruções abaixo
+    não serão executas se o ficheiro for importado
+    de outro ficheiro. Deste modo podemos testar a
+    classe de forma isolada.
+    """
+
+    species_1 = Species(
+        nome="castanheiro",
+        tipo_folhagem="caduca",
+        produz_fruto=True,
+        tipo_planta="árvore",
+        raio_max=8.1,
+        num_medio_anos_vida=100
+    )
+
+    plant_1 = Plant(
+        especie=species_1,
+        localizacao_coords=(10.0, 5.0),
+        ano_plantacao=2020
+    )
+
+
+    print("plant_1.especie.nome:", plant_1.especie.nome)
+    print("plant_1.especie.tipo_folhagem:", plant_1.especie.tipo_folhagem)
+
+    print("plant_1.localizacao_coords:", plant_1.localizacao_coords)
+    print("plant_1.ano_plantacao:", plant_1.ano_plantacao)
+    print("plant_1.area_de_ocupacao:", plant_1.area_de_ocupacao)
+
+    print("plant_1.idade(ano_a_verificar=2022):", plant_1.idade(ano_a_verificar=2022))
+    print("plant_1.idade(ano_a_verificar=1904):", plant_1.idade(ano_a_verificar=1904))
+
+    print("plant_1.pertence_a_area_de_ocupacao_plantacao(dadas_as_coordenadas=(12.0, 6.0)):", plant_1.pertence_a_area_de_ocupacao_plantacao(dadas_as_coordenadas=(12.0, 6.0)))
+
+    print(plant_1)
