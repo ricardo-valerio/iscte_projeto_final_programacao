@@ -60,7 +60,7 @@ if __name__ == "__main__":
     """
     Este if permite correr o ficheiro como um
     script independente e as instruções abaixo
-    não serão executas se o ficheiro for importado
+    não serão executadas se o ficheiro for importado
     de outro ficheiro. Deste modo podemos testar a
     classe de forma isolada.
     """
