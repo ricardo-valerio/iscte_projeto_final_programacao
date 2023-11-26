@@ -1,5 +1,5 @@
 from math import sqrt as math_sqrt
-from Species import *
+from Species import Species
 
 class Plant:
     def __init__(self,
