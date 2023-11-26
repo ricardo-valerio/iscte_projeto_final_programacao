@@ -24,7 +24,11 @@ class Plant:
     def idade(self, ano_a_verificar) -> int:
         # perguntar aos profs qual a melhor forma de implementar
         if ano_a_verificar < self.__ano_plantacao:
-            print(f"A planta só foi plantada em {self.__ano_plantacao}.")
+           print(
+                f"A planta {self.especie.nome} "
+                f"localizada em {self.localizacao_coords} "
+                f"só foi plantada em {self.__ano_plantacao}."
+            )
             return 0
         return ano_a_verificar - self.__ano_plantacao
 
