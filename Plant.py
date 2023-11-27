@@ -25,7 +25,7 @@ class Plant:
         # perguntar aos profs qual a melhor forma de implementar
         if ano_a_verificar < self.__ano_plantacao:
            print(
-                f"A planta {self.especie.nome} "
+                f"A planta {self.__especie.nome} "
                 f"localizada em {self.localizacao_coords} "
                 f"só foi plantada em {self.__ano_plantacao}."
             )
