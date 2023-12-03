@@ -27,8 +27,14 @@ class Park:
             print("Não há espaço suficiente para adicionar a planta.")
 
 
-    def remove_plant(self, plant_location):
-        pass
+    def remove_plant(self, plant_location) -> None:
+        for plant in self.__plants:
+            if plant.localizacao_coords == plant_location:
+                self.__plants.remove(plant)
+                print("Planta removida com sucesso.")
+                return
+        print("Não foi encontrada qualquer planta na localização especificada.")
+
 
 
     def is_location_occupied_by_another_plant(self, at_coords):
