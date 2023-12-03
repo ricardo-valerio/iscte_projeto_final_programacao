@@ -11,17 +11,20 @@ class Park:
 
 
     @property
-    def planting_area(self):
+    def planting_area(self) -> float:
         return self.__planting_area
 
 
     @property
-    def plants(self):
+    def plants(self) -> list[Plant, ..., Plant]:
         return self.__plants
 
 
-    def add_plant(self, planta_a_adicionar):
-        pass
+    def add_plant(self, planta_a_adicionar) -> None:
+        if self.is_there_space_available_for_the_plant(planta_a_adicionar):
+            print("Planta adicionada ao parque com sucesso.")
+        else:
+            print("Não há espaço suficiente para adicionar a planta.")
 
 
     def remove_plant(self, plant_location):
