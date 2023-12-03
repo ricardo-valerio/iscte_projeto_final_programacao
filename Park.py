@@ -84,8 +84,11 @@ class Park:
         return len(self.get_unique_species_list())
 
 
-    def display_plants_sorted_by_species(self):
-        pass
+    def display_plants_sorted_by_species(self) -> None:
+        # https://docs.python.org/3.11/howto/sorting.html
+        sorted_plants = sorted(self.__plants, key=lambda plant: plant.especie.nome)
+        for plant in sorted_plants:
+            print(plant)
 
 
     def display_plants_sorted_by_planting_year(self):
