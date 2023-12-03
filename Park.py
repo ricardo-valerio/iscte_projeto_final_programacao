@@ -1,19 +1,19 @@
+from Species import Species
+from Plant import Plant
+
 class Park:
     def __init__(self, name: str, planting_area: float):
         self.__name = name
         self.__planting_area = planting_area
         self.__plants = list()
 
-
     @property
     def name(self) -> str:
         return self.__name
 
-
     @property
     def planting_area(self) -> float:
         return self.__planting_area
-
 
     @property
     def plants(self) -> list[Plant, ..., Plant]:
@@ -21,27 +21,46 @@ class Park:
 
 
     def add_plant(self, planta_a_adicionar) -> None:
+        """
+            A razão pela qual não juntei as duas condições abaixo num único if
+            foi para poder fazer print das mensagens específicas, caso uma
+            delas não se verifique verdadeira.
+        """
+        # Verificar se há espaço antes de adicionar
         if self.is_there_space_available_for_the_plant(planta_a_adicionar):
-            print("Planta adicionada ao parque com sucesso.")
+            # verificar se localização está ocupada antes de adicionar
+            if not self.is_location_occupied_by_another_plant(at_coords=planta_a_adicionar.localizacao_coords):
+                self.__plants.append(planta_a_adicionar)
+                print("\n✅ Planta adicionada ao parque com sucesso.")
+            else:
+                print("\n❌ Não foi possível adicionar a planta pois a localização já se encontra ocupada.")
         else:
-            print("Não há espaço suficiente para adicionar a planta.")
+            print("\n❌ Não há espaço suficiente para adicionar a planta.")
 
 
     def remove_plant(self, plant_location) -> None:
         for plant in self.__plants:
             if plant.localizacao_coords == plant_location:
                 self.__plants.remove(plant)
-                print("Planta removida com sucesso.")
+                print("\n✅ Planta removida com sucesso.")
                 return
-        print("Não foi encontrada qualquer planta na localização especificada.")
+        print("\n❌ Não foi encontrada qualquer planta na localização especificada.")
 
 
+    def list_plants(self) -> None:
+        if self.is_empty():
+            print("\nℹ️ O parque não tem plantas.")
+            return
 
-    def is_location_occupied_by_another_plant(self, at_coords) -> bool:
-        for plant in self.__plants:
-            if plant.localizacao_coords == at_coords:
-                return True
-        return False
+        for plant in self.plants:
+            print(plant)
+
+
+    def is_empty(self) -> bool:
+        """
+        função helper para ajudar a verificar se o parque tem ou não plantas
+        """
+        return len(self.plants) == 0
 
 
     def total_area_occupied(self) -> float:
@@ -52,13 +71,24 @@ class Park:
         return total_area
 
 
-   def available_planting_area(self) -> float:
+    def available_planting_area(self) -> float:
         return self.__planting_area - self.total_area_occupied()
 
 
+    def is_there_space_available_for_the_plant(self, plant) -> bool:
+        return self.available_planting_area() >= plant.area_de_ocupacao_circular()
+
+
+    def is_location_occupied_by_another_plant(self, at_coords) -> bool:
+        for plant in self.__plants:
+            if plant.localizacao_coords == at_coords:
+                return True
+        return False
+
+
     def average_plant_age(self, year) -> float:
-        if len(self.__plants) == 0:
-            print("O parque não tem plantas.")
+        if self.is_empty():
+            print("\nℹ️ O parque não tem plantas.")
             return 0
 
         total_age = 0
@@ -69,6 +99,7 @@ class Park:
 
 
     def get_unique_species_list(self) -> list[str, ..., str]:
+        # return list(set(plant.species for plant in self.__plants))
         lista_de_especies = list()
         for planta in self.__plants:
             lista_de_especies.append(planta.especie.nome)
@@ -112,19 +143,73 @@ class Park:
 
 
 
-    def list_plants(self):
-        pass
-
-
-    def is_empty(self):
-        pass
-
-
-    def is_there_space_available_for_the_plant(self, plant):
-        pass
-
-
     def __str__(self) -> str:
         return f"\nNome do parque: {self.__name}\n"             \
                f"Área de plantação: {self.__planting_area}\n"   \
                f"Número de plantas: {len(self.__plants)}\n"
+
+
+
+
+
+
+if __name__ == "__main__":
+    """
+    Este if permite correr o ficheiro como um
+    script independente e as instruções abaixo
+    não serão executas se o ficheiro for importado
+    de outro ficheiro. Deste modo podemos testar a
+    classe de forma isolada.
+    """
+
+    # criar instância da classe Park
+    park_1 = Park(
+        name          = "Central Park",
+        planting_area = 1000
+    )
+
+    # criar instâncias da classe Species
+    species_1 = Species(
+        nome                = "Rosa",
+        tipo_folhagem       = "caduca",
+        produz_fruto        = True,
+        tipo_planta         = "arbusto",
+        raio_max            = 3.5,
+        num_medio_anos_vida = 5
+    )
+
+    species_2 = Species(
+        nome                = "Camomila",
+        tipo_folhagem       = "caduca",
+        produz_fruto        = True,
+        tipo_planta         = "arbusto",
+        raio_max            = 4.5,
+        num_medio_anos_vida = 5
+    )
+
+    # criar instâncias da classe Plant
+    plant_1 = Plant(
+        especie            = species_1,
+        localizacao_coords = (10.0, 5.0),
+        ano_plantacao      = 1990
+    )
+
+    plant_2 = Plant(
+        especie            = species_2,
+        localizacao_coords = (9.0, 6.0),
+        ano_plantacao      = 2017
+    )
+
+    plant_3 = Plant(
+        especie            = species_2,
+        localizacao_coords = (19.0, 2.0),
+        ano_plantacao      = 2019
+    )
+
+    # adicionar plantas ao parque
+    park_1.add_plant(plant_1)
+    park_1.add_plant(plant_2)
+    park_1.add_plant(plant_3)
+
+    # chamar o método __str__ para obter informações sobre o parque
+    print(park_1)
