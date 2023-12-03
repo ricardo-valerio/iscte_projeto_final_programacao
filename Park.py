@@ -52,8 +52,8 @@ class Park:
         return total_area
 
 
-    def available_planting_area(self):
-        pass
+   def available_planting_area(self) -> float:
+        return self.__planting_area - self.total_area_occupied()
 
 
     def average_plant_age(self, year):
