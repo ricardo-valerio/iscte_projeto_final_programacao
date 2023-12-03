@@ -68,12 +68,20 @@ class Park:
         return round(total_age / len(self.__plants), 2)
 
 
-    def num_of_unique_species(self):
-        pass
+    def get_unique_species_list(self) -> list[str, ..., str]:
+        lista_de_especies = list()
+        for planta in self.__plants:
+            lista_de_especies.append(planta.especie.nome)
+
+        # https://datagy.io/python-count-unique-values-list/
+        # 1º set() converte a lista para set (conjunto) - que
+        # seguindo a teoria matemática de conjuntos elimina elementos repetidos
+        # e 2º list() converte novamente para o tipo list
+        return list(set(lista_de_especies))
 
 
-    def get_unique_species_list(self):
-        pass
+    def num_of_unique_species(self) -> int:
+        return len(self.get_unique_species_list())
 
 
     def display_plants_sorted_by_species(self):
