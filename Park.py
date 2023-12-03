@@ -91,12 +91,25 @@ class Park:
             print(plant)
 
 
-    def display_plants_sorted_by_planting_year(self):
-        pass
+    def display_plants_sorted_by_planting_year(self) -> None:
+        # https://docs.python.org/3.11/howto/sorting.html
+        sorted_plants = sorted(self.__plants, key=lambda plant: plant.ano_plantacao)
+        for plant in sorted_plants:
+            print(plant)
 
 
-    def get_long_living_plants(self):
-        pass
+    def get_long_living_plants(self) -> list[Plant, ..., Plant]:
+        # https://favtutor.com/blogs/get-current-year-python
+        from datetime import date
+        ano_vigente = date.today().year
+
+        long_living_plants = list()
+        for plant in self.__plants:
+            if plant.idade(ano_a_verificar=ano_vigente) >= plant.especie.num_medio_anos_vida:
+                long_living_plants.append(plant)
+
+        return long_living_plants
+
 
 
     def list_plants(self):
