@@ -56,8 +56,16 @@ class Park:
         return self.__planting_area - self.total_area_occupied()
 
 
-    def average_plant_age(self, year):
-        pass
+    def average_plant_age(self, year) -> float:
+        if len(self.__plants) == 0:
+            print("O parque não tem plantas.")
+            return 0
+
+        total_age = 0
+        for plant in self.__plants:
+            total_age += plant.idade(ano_a_verificar=year)
+
+        return round(total_age / len(self.__plants), 2)
 
 
     def num_of_unique_species(self):
