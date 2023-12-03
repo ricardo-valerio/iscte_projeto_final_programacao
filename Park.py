@@ -44,8 +44,12 @@ class Park:
         return False
 
 
-    def total_area_occupied(self):
-        pass
+    def total_area_occupied(self) -> float:
+        total_area = 0
+        for plant in self.__plants:
+            total_area += plant.area_de_ocupacao_circular()
+
+        return total_area
 
 
     def available_planting_area(self):
