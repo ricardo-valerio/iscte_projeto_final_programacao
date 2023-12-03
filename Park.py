@@ -37,8 +37,11 @@ class Park:
 
 
 
-    def is_location_occupied_by_another_plant(self, at_coords):
-        pass
+    def is_location_occupied_by_another_plant(self, at_coords) -> bool:
+        for plant in self.__plants:
+            if plant.localizacao_coords == at_coords:
+                return True
+        return False
 
 
     def total_area_occupied(self):
