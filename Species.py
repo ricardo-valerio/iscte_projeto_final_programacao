@@ -1,3 +1,4 @@
+from InputDataValidator import InputDataValidator
 from math import pi as math_pi
 
 class Species:
@@ -8,12 +9,12 @@ class Species:
                  tipo_planta         : str,
                  raio_max            : float,
                  num_medio_anos_vida : int):
-        self.__nome                = nome
-        self.__tipo_folhagem       = tipo_folhagem
-        self.__produz_fruto        = produz_fruto
-        self.__tipo_planta         = tipo_planta
-        self.__raio_max            = raio_max
-        self.__num_medio_anos_vida = num_medio_anos_vida
+        self.__nome                = InputDataValidator.get_valid_species_name(input_text=nome)
+        self.__tipo_folhagem       = InputDataValidator.get_valid_follage_type(species_name=self.__nome, input_text=tipo_folhagem)
+        self.__produz_fruto        = bool(produz_fruto)
+        self.__tipo_planta         = InputDataValidator.get_valid_plant_type(species_name=self.__nome, input_text=tipo_planta)
+        self.__raio_max            = InputDataValidator.get_valid_positive_radius(species_name=self.__nome, input_value=raio_max)
+        self.__num_medio_anos_vida = InputDataValidator.get_valid_positive_avg_life(species_name=self.__nome, input_value=num_medio_anos_vida)
 
     @property
     def nome(self) -> str:
@@ -43,7 +44,7 @@ class Species:
         return round(math_pi * (self.__raio_max ** 2), 2)
 
     def __str__(self) -> str:
-        return f"Nome da espécie: {self.__nome}\n"                           \
+        return f"\nNome da espécie: {self.__nome}\n"                         \
                f"Tipo de planta: {self.__tipo_planta}\n"                     \
                f"Tipo de folhagem: {self.__tipo_folhagem}\n"                 \
                f"Produz fruto?: {self.__produz_fruto}\n"                     \
@@ -69,13 +70,14 @@ if __name__ == "__main__":
         nome                = "castanheiro",
         tipo_folhagem       = "caduca",
         produz_fruto        = True,
-        tipo_planta         = "árvore",
+        tipo_planta         = "erva",
         raio_max            = 8.1,
         num_medio_anos_vida = 100
     )
 
-    species_2 = Species("cedro", "perene", False, "árvore", 1.5, 80)
-    species_3 = Species("pinheiro manso", "perene", True, "árvore", 3.1, 100)
+    species_2 = Species("Camomila", "semicaduca", False, "árvore", "eoi", "coiso")
+    species_3 = Species("", "pesistent", True, "árvore", 3.1, 100)
+    species_4 = Species("cedro", "perenee", False, "árvore", 1.5, 80)
 
     print(species_1.nome)
     print(species_1.tipo_folhagem)

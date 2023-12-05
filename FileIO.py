@@ -25,10 +25,10 @@ class FileIO:
 
                     species_dict[name] = {
                         "foliage_type"   : foliage_type,
-                        "produces_fruit" : produces_fruit,
+                        "produces_fruit" : bool(produces_fruit),
                         "plant_type"     : plant_type,
-                        "max_radius"     : max_radius,
-                        "avg_lifespan"   : avg_lifespan
+                        "max_radius"     : float(max_radius),
+                        "avg_lifespan"   : int(avg_lifespan)
                     }
         except FileNotFoundError:
             print(f"\n❌ O ficheiro que tentou ler, com o nome '{species_file_path}', não existe!")
@@ -48,8 +48,8 @@ class FileIO:
 
         with open(file_path_to_save, 'w', encoding="utf-8") as file:
 
-            # Escrever na 1ª linha o nome e a área de plantação do parque
-            file.write(f"{park.name},{park.planting_area}\n")
+            # Escrever na 1ª linha o nome, a largura e comprimento do parque
+            file.write(f"{park.name},{park.largura},{park.comprimento}\n")
 
             # Escrever informações sobre as plantas do parque no formato dado no enunciado
             for planta in park.plants:
@@ -71,13 +71,14 @@ class FileIO:
             for line in file:
                 values = line.strip().split(',')
 
-                if len(values) == 2:
-                    park_name, planting_area = values
+                if len(values) == 3:
+                    park_name, largura, comprimento = values
 
                     # criar instância da classe Park
                     park_object = Park(
-                        name          = park_name,
-                        planting_area = float(planting_area)
+                        name        = park_name,
+                        largura     = float(largura),
+                        comprimento = float(comprimento)
                     )
                 else:
                     species_name, location_x, location_y, planting_year = values
@@ -111,61 +112,3 @@ if __name__ == "__main__":
     import pprint
     pprint.pprint(FileIO.read_species_file_and_return_dict())
 
-
-
-    from Park import Park
-    from Species import Species
-    from Plant import Plant
-
-    # criar instância da classe Park
-    park_1 = Park(
-        name          = "Parque da Bela Vista",
-        planting_area = 1000
-    )
-
-    # criar instâncias da classe Species
-    species_1 = Species(
-        nome                = "Rosa",
-        tipo_folhagem       = "caduca",
-        produz_fruto        = True,
-        tipo_planta         = "arbusto",
-        raio_max            = 3.5,
-        num_medio_anos_vida = 5
-    )
-
-    species_2 = Species(
-        nome                = "Camomila",
-        tipo_folhagem       = "caduca",
-        produz_fruto        = True,
-        tipo_planta         = "arbusto",
-        raio_max            = 4.5,
-        num_medio_anos_vida = 5
-    )
-
-    # criar instâncias da classe Plant
-    plant_1 = Plant(
-        especie            = species_1,
-        localizacao_coords = (10.0, 5.0),
-        ano_plantacao      = 1990
-    )
-
-    plant_2 = Plant(
-        especie            = species_2,
-        localizacao_coords = (9.0, 6.0),
-        ano_plantacao      = 2017
-    )
-
-    plant_3 = Plant(
-        especie            = species_2,
-        localizacao_coords = (19.0, 2.0),
-        ano_plantacao      = 2019
-    )
-
-    # adicionar plantas ao parque
-    park_1.add_plant(plant_1)
-    park_1.add_plant(plant_2)
-    park_1.add_plant(plant_3)
-
-
-    # escrever as informações, do parque criado, para um ficheiro
-    FileIO.write_park_file(park=park_1)

@@ -18,19 +18,21 @@ class Plant:
     def ano_plantacao(self) -> int:
         return self.__ano_plantacao
 
+
     def area_de_ocupacao_circular(self) -> float:
         return self.__especie.area_de_ocupacao_circular()
 
+
     def idade(self, ano_a_verificar) -> int:
-        # perguntar aos profs qual a melhor forma de implementar
         if ano_a_verificar < self.__ano_plantacao:
-           print(
-                f"A planta {self.__especie.nome} "
+            print(
+                f"A planta {self.especie.nome} "
                 f"localizada em {self.localizacao_coords} "
                 f"só foi plantada em {self.__ano_plantacao}."
             )
             return 0
         return ano_a_verificar - self.__ano_plantacao
+
 
     def pertence_a_area_de_ocupacao_plantacao(self, dadas_as_coordenadas) -> bool:
         distancia = math_sqrt(
@@ -39,9 +41,10 @@ class Plant:
         )
         return distancia < self.__especie.raio_max
 
+
     def __str__(self) -> str:
-        return f"Nome da espécie da planta: {self.__especie.nome}\n"      \
-               f"Localização GPS: {self.localizacao_coords}\n"            \
+        return f"\nNome da espécie da planta: {self.__especie.nome}\n"      \
+               f"Localização GPS: {self.localizacao_coords}\n"              \
                f"Ano de plantação: {self.__ano_plantacao}\n"
 
 
