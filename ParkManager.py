@@ -10,6 +10,7 @@ class ParkManager:
     def display_menu(self):
         print(
             f"\nGESTÃO DO PARQUE: {self.park.name}\n\n"
+            "0. Listar espécies de plantas existentes para se poder plantar\n"
             "1. Adicionar planta\n"
             "2. Remover planta\n"
             "3. Listar plantas existentes no parque\n"
@@ -28,6 +29,8 @@ class ParkManager:
 
             # https://www.geeksforgeeks.org/python-match-case-statement/
             match choice:
+                case '0':
+                    self.display_existing_species()
                 case '1':
                     self.add_plant()
                 case '2':
@@ -50,6 +53,11 @@ class ParkManager:
                 case _:
                     print("\n❌ Escolha inválida. Tente de novo.")
 
+    def display_existing_species(self):
+        especies_registadas = FileIO.read_species_file_and_return_dict()
+        print("\nLista de espécies de plantas existentes para se poder plantar:\n")
+        for especie in especies_registadas.keys():
+            print(f" - {especie} (raio de ocupação: {especies_registadas[especie]['max_radius']})")
 
     def add_plant(self):
         # pedir ao utilizador informações sobre a planta
@@ -98,8 +106,8 @@ class ParkManager:
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots()
-        ax.set_xlim((0, self.park.comprimento))
-        ax.set_ylim((0, self.park.largura))
+        ax.set_xlim((0, self.park.largura))
+        ax.set_ylim((0, self.park.comprimento))
         ax.set_box_aspect(1)
 
         # do enunciado:
@@ -171,108 +179,125 @@ class ParkManager:
 
 
     def display_species_list(self):
-        species_list = self.park.get_unique_species_list()
-        print("\nLista de espécies no parque:")
-        for especie in species_list:
-            print(f" - {especie}")
+        if self.park.is_empty():
+            print("\nℹ️ O parque está vazio! Não existe qualquer espécie plantada.")
+        else:
+            species_list = self.park.get_unique_species_list()
+            print("\nLista de espécies no parque:")
+            for especie in species_list:
+                print(f" - {especie}")
 
 
     def display_plants_by_species(self):
-        species_list = self.park.get_unique_species_list()
-        print("\nPlantas organizadas por espécies:\n")
-        for especie in species_list:
-            print(f"\n------------------ {especie} ------------------")
-            for plant in self.park.plants:
-                if plant.especie.nome == especie:
-                    print(plant)
+        if self.park.is_empty():
+            print("\nℹ️ O parque está vazio! Não existe qualquer espécie plantada.")
+        else:
+            species_list = self.park.get_unique_species_list()
+            print("\nPlantas organizadas por espécies:\n")
+            for especie in species_list:
+                print(f"\n------------------ {especie} ------------------")
+                for plant in self.park.plants:
+                    if plant.especie.nome == especie:
+                        print(plant)
 
 
     def display_plants_by_year(self):
-        print("\nPlantas organizadas por ano de plantação:")
-        self.park.display_plants_sorted_by_planting_year()
+        if self.park.is_empty():
+            print("\nℹ️ O parque está vazio! Não existe qualquer espécie plantada.")
+        else:
+            print("\nPlantas organizadas por ano de plantação:")
+            self.park.display_plants_sorted_by_planting_year()
 
 
     def display_long_living_plants(self):
-        long_living_plants = self.park.get_long_living_plants()
-
-        if long_living_plants:
-            print("\nPlantas que excederam o tempo médio de vida da sua espécie:")
-            for plant in long_living_plants:
-                print(plant)
+        if self.park.is_empty():
+            print("\nℹ️ O parque está vazio! Não existe qualquer espécie plantada.")
         else:
-            print("\nNão existem plantas que excederam o tempo médio de vida da sua espécie.")
+            long_living_plants = self.park.get_long_living_plants()
+            if long_living_plants:
+                print("\nPlantas que excederam o tempo médio de vida da sua espécie:")
+                for plant in long_living_plants:
+                    print(plant)
+            else:
+                print("\nℹ️ Não existem plantas que excederam o tempo médio de vida da sua espécie.")
 
 
     def generate_age_histogram(self):
-        import matplotlib.pyplot as plt
+        if self.park.is_empty():
+            print("\nℹ️ O parque está vazio! Não existe qualquer espécie plantada.")
+        else:
+            import matplotlib.pyplot as plt
 
-        # do enunciado:
-        # labels = ['0', '2', '3', '6', '10'] # idade das plantas em anos
-        # values = [3, 1, 2, 5, 3] # quantidade de plantas com 0, 2, 3, 6 e 10 anos
+            # do enunciado:
+            # labels = ['0', '2', '3', '6', '10'] # idade das plantas em anos
+            # values = [3, 1, 2, 5, 3] # quantidade de plantas com 0, 2, 3, 6 e 10 anos
 
-        from datetime import date
-        ano_vigente = date.today().year
-        # https://realpython.com/list-comprehension-python/
-        plants_ages = [plant.idade(ano_a_verificar=ano_vigente) for plant in self.park.plants]
+            from datetime import date
+            ano_vigente = date.today().year
+            # https://realpython.com/list-comprehension-python/
+            plants_ages = [plant.idade(ano_a_verificar=ano_vigente) for plant in self.park.plants]
 
-        # tornar os valores da lista únicos usando novamente a técnica usada anteriormente na T3
-        labels = list(set(plants_ages))
+            # tornar os valores da lista únicos usando novamente a técnica usada anteriormente na T3
+            labels = list(set(plants_ages))
 
-        # encontrar o nº de ocurrências das idades das plantas
-        # provavelmente existe alguma forma mais "pythonica" de fazer isto...
-        values = list()
-        for label in labels:
-            values.append(plants_ages.count(label))
+            # encontrar o nº de ocurrências das idades das plantas
+            # provavelmente existe alguma forma mais "pythonica" de fazer isto...
+            values = list()
+            for label in labels:
+                values.append(plants_ages.count(label))
 
-        # print("labels", labels)
-        # print("values", values)
+            # print("labels", labels)
+            # print("values", values)
 
-        plt.bar(labels, values)
+            plt.bar(labels, values)
 
-        plt.title('Histograma por idade')
-        plt.xlabel('Idade das plantas')
-        plt.ylabel('Frequência das idades')
+            plt.title('Histograma por idade')
+            plt.xlabel('Idade das plantas')
+            plt.ylabel('Frequência das idades')
 
-        plt.show()
+            plt.show()
 
 
     def generate_species_histogram(self):
-        import matplotlib.pyplot as plt
+        if self.park.is_empty():
+            print("\nℹ️ O parque está vazio! Não existe qualquer espécie plantada.")
+        else:
+            import matplotlib.pyplot as plt
 
-        # do enunciado:
-        # labels = ['0', '2', '3', '6', '10'] # idade das plantas em anos
-        # values = [3, 1, 2, 5, 3] # quantidade de plantas com 0, 2, 3, 6 e 10 anos
+            # do enunciado:
+            # labels = ['0', '2', '3', '6', '10'] # idade das plantas em anos
+            # values = [3, 1, 2, 5, 3] # quantidade de plantas com 0, 2, 3, 6 e 10 anos
 
-        # https://realpython.com/list-comprehension-python/
-        plants_species = [plant.especie.nome for plant in self.park.plants]
+            # https://realpython.com/list-comprehension-python/
+            plants_species = [plant.especie.nome for plant in self.park.plants]
 
-        # tornar os valores da lista únicos usando novamente a técnica usada anteriormente na T3
-        labels = self.park.get_unique_species_list()
+            # tornar os valores da lista únicos usando novamente a técnica usada anteriormente na T3
+            labels = self.park.get_unique_species_list()
 
-        # encontrar o nº de ocurrências das idades das plantas
-        # provavelmente existe alguma forma mais "pythonica" de fazer isto...
-        values = list()
-        for label in labels:
-            values.append(plants_species.count(label))
+            # encontrar o nº de ocurrências das idades das plantas
+            # provavelmente existe alguma forma mais "pythonica" de fazer isto...
+            values = list()
+            for label in labels:
+                values.append(plants_species.count(label))
 
-        # print("labels", labels)
-        # print("values", values)
+            # print("labels", labels)
+            # print("values", values)
 
-        plt.bar(labels, values)
+            plt.bar(labels, values)
 
-        plt.title('Histograma por espécies')
-        plt.xlabel('Espécies das plantas')
-        plt.ylabel('Frequência das espécies')
+            plt.title('Histograma por espécies')
+            plt.xlabel('Espécies das plantas')
+            plt.ylabel('Frequência das espécies')
 
-        plt.show()
+            plt.show()
 
 
     def save_to_file(self):
-        if self.park.is_empty():
-            print("\nℹ️ O parque está vazio! Não é possível guardar informação ainda.")
-        else:
-            FileIO.write_park_file(park=self.park)
-            print("\n✅ O ficheiro com a informação do parque foi guardado com sucesso.")
+        # if self.park.is_empty():
+        #     print("\nℹ️ O parque está vazio! Não é possível guardar informação ainda.")
+        # else:
+        FileIO.write_park_file(park=self.park)
+        print("\n✅ O ficheiro com a informação do parque foi guardado com sucesso.")
 
 
 

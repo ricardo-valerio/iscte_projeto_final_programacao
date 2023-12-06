@@ -179,7 +179,9 @@ class Park:
 
     def __str__(self) -> str:
         return f"\nNome do parque: {self.__name}\n"                \
-               f"Área de plantação: {self.planting_area:.1f} m²\n" \
+               f"Largura: {self.largura:.2f} m\n"                  \
+               f"Comprimento: {self.comprimento:.2f} m\n"          \
+               f"Área de plantação: {self.planting_area:.2f} m²\n" \
                f"Número de plantas: {len(self.__plants)}\n"
 
 

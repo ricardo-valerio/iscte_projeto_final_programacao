@@ -55,23 +55,39 @@ class InputDataValidator:
 
     # ---------- CLASS PARK VALIDATIONS ------------------------------------------------------------------------------------
 
-    def get_valid_park_height(park_name, input_value) -> float:
-        park_height = input_value
-        while not isinstance(park_height, float) or park_height <= 0:
+    def get_valid_park_name(input_text: str) -> str:
+        park_name = input_text.strip().lower()
+        while not isinstance(park_name, str) or park_name == "" or park_name.isnumeric():
             try:
-                park_height = float(input(f'Insira uma largura válida [decimal positivo] para o parque {park_name}: '))
+                park_name = input('Insira um nome válido (não pode ser vazio ou numérico) para o parque: ').strip().lower()
             except ValueError:
                 continue
+        return park_name
+
+
+    def get_valid_park_height(park_name, input_value) -> float:
+        park_height = input_value
+        try:
+            park_height = float(park_height)
+        except Exception:
+            while not isinstance(park_height, float) or park_height <= 0 or park_height == "":
+                try:
+                    park_height = float(input(f'Insira uma largura válida [decimal positivo] para o parque {park_name}: '))
+                except ValueError:
+                    continue
         return park_height
 
 
     def get_valid_park_width(park_name, input_value) -> float:
         park_width = input_value
-        while not isinstance(park_width, float) or park_width <= 0:
-            try:
-                park_width = float(input(f'Insira um comprimento válido [decimal positivo] para o parque {park_name}: '))
-            except ValueError:
-                continue
+        try:
+            park_width = float(park_width)
+        except Exception:
+            while not isinstance(park_width, float) or park_width <= 0:
+                try:
+                    park_width = float(input(f'Insira um comprimento válido [decimal positivo] para o parque {park_name}: '))
+                except ValueError:
+                    continue
         return park_width
 
 
@@ -99,34 +115,47 @@ class InputDataValidator:
             num_medio_anos_vida = int(especies_registadas[nome_da_especie_inserida]["avg_lifespan"])
         )
 
+    def validate_float_value(question):
+        float_value = input(question)
+        try:
+            float_value = float(float_value)
+        except Exception:
+            while not isinstance(float_value, float) or float_value <= 0:
+                try:
+                    float_value = float(input(f'Insira um [decimal positivo] para a {question}'))
+                except ValueError:
+                    continue
+        return float_value
 
     def get_valid_location_to_plant(in_park, species_object) -> tuple[float, float]:
-        localizacao = float(input("Localização da planta (coordenada x): ")),\
-                      float(input("Localização da planta (coordenada y): "))
+        localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
+                      InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
 
-        while in_park.is_location_occupied_by_another_plant(at_coords=localizacao):
-            print("❌ A localização inserida já está ocupada.")
-            localizacao = float(input("Localização da planta (coordenada x): ")),\
-                          float(input("Localização da planta (coordenada y): "))
-
-
+        # verificar se a localização está ocupada
+        is_location_occupied = in_park.is_location_occupied_by_another_plant(at_coords=localizacao)
         # verificar se existe interseção de área de ocupação
         is_there_intersection = InputDataValidator.verify_if_there_is_intersection(localizacao, in_park, species_object)
-
-        while is_there_intersection:
-            print("\n❌ Não foi possível adicionar a planta pois existia sobreposição com outra planta.\n")
-            localizacao = float(input("Localização da planta (coordenada x): ")),\
-                          float(input("Localização da planta (coordenada y): "))
-            is_there_intersection = InputDataValidator.verify_if_there_is_intersection(localizacao, in_park, species_object)
-
-
         # verificar se está dentro dos limites do parque
-        is_within_park_boundaries = InputDataValidator.verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object)
-        while is_within_park_boundaries:
-            print("\n❌ A Localização da planta não está dentro dos limites do parque.\n")
-            localizacao = float(input("Localização da planta (coordenada x): ")),\
-                          float(input("Localização da planta (coordenada y): "))
-            is_within_park_boundaries = InputDataValidator.verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object)
+        is_not_within_park_boundaries = InputDataValidator.verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object)
+
+        while is_location_occupied or is_there_intersection or is_not_within_park_boundaries:
+
+            if is_location_occupied:
+                print("❌ A localização inserida já está ocupada.")
+            elif is_there_intersection:
+                print("\n❌ Não foi possível adicionar a planta pois existia sobreposição com outra planta.\n")
+            elif is_not_within_park_boundaries:
+                print("\n❌ A Localização da planta não está dentro dos limites do parque.\n")
+
+            localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
+                          InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
+
+            # verificar se a localização está ocupada
+            is_location_occupied = in_park.is_location_occupied_by_another_plant(at_coords=localizacao)
+            # verificar se existe interseção de área de ocupação
+            is_there_intersection = InputDataValidator.verify_if_there_is_intersection(localizacao, in_park, species_object)
+            # verificar se está dentro dos limites do parque
+            is_not_within_park_boundaries = InputDataValidator.verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object)
 
         return localizacao
 

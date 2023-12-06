@@ -46,9 +46,17 @@ class ParkManagementExtra:
 
 
     def add_park(self) -> None:
-        nome_parque = input("Insira o nome do parque: ")
-        largura_parque = float(input("Insira a largura do parque (metros): "))
-        comprimento_parque = float(input("Insira o comprimento do parque (metros): "))
+        nome_parque = InputDataValidator.get_valid_park_name(
+                         input_text=input("Insira o nome do parque: ")
+                      )
+        largura_parque = InputDataValidator.get_valid_park_height(
+                            park_name=nome_parque,
+                            input_value=input("Insira a largura do parque (metros): ")
+                         )
+        comprimento_parque = InputDataValidator.get_valid_park_width(
+                                park_name=nome_parque,
+                                input_value=input("Insira o comprimento do parque (metros): ")
+                             )
         novo_parque = Park(name=nome_parque, largura=largura_parque, comprimento=comprimento_parque)
         self.parks.append(novo_parque)
         print("\n✅ Parque adicionado com sucesso.")
@@ -71,7 +79,7 @@ class ParkManagementExtra:
             print("\nℹ️ Não é possível remover parques pois o sistema não tem parques.")
             return
 
-        nome_parque = input("Indique o nome do parque a remover: ")
+        nome_parque = input("Indique o nome do parque a remover: ").lower()
         for park in self.parks:
             if nome_parque == park.name:
                 self.parks.remove(park)
