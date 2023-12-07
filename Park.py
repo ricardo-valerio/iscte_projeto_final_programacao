@@ -95,7 +95,10 @@ class Park:
 
 
     def is_within_park_boundaries(self, plant_to_add):
-        return plant_to_add.localizacao_coords[0] + plant_to_add.especie.raio_max <= self.largura and plant_to_add.localizacao_coords[1] + plant_to_add.especie.raio_max <= self.comprimento
+        return (plant_to_add.localizacao_coords[0] + plant_to_add.especie.raio_max < self.largura and \
+                plant_to_add.localizacao_coords[1] + plant_to_add.especie.raio_max < self.comprimento) and \
+               (plant_to_add.localizacao_coords[0] - plant_to_add.especie.raio_max > 0 and \
+                plant_to_add.localizacao_coords[1] - plant_to_add.especie.raio_max > 0)
 
 
     def is_there_space_available_for_the_plant(self, plant) -> bool:

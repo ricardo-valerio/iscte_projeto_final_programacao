@@ -1,6 +1,6 @@
 class FileIO:
 
-    def read_species_file_and_return_dict(species_file_path='csv_files/species.csv') -> dict:
+    def read_species_file_and_return_dict(species_file_path='csv_files/species.csv') -> dict or None:
         species_dict = dict()
 
         # sem o encoding="utf-8" os acentos não apareciam
@@ -37,7 +37,6 @@ class FileIO:
         finally:
             return species_dict
 
-
     def write_park_file(park, file_path_to_save=None) -> None:
 
         if not file_path_to_save:
@@ -60,8 +59,8 @@ class FileIO:
                     f"{planta.ano_plantacao}\n"
                 )
 
-
-    def get_park_from_a_file_given_a_name(park_file_name: str):
+    def get_park_from_a_file_given_a_name(park_file_name: str) -> object:
+        # https://www.stechies.com/python-circular-imports-module-solving-circular-import-prob/
         from Park import Park
         from InputDataValidator import InputDataValidator
         from Plant import Plant
@@ -74,7 +73,6 @@ class FileIO:
                 if len(values) == 3:
                     park_name, largura, comprimento = values
 
-                    # criar instância da classe Park
                     park_object = Park(
                         name        = park_name,
                         largura     = float(largura),
@@ -83,7 +81,7 @@ class FileIO:
                 else:
                     species_name, location_x, location_y, planting_year = values
 
-                    species_object = InputDataValidator.get_species_object_info_give_a_species_name(species_name=species_name)
+                    species_object = InputDataValidator.get_species_object_info_given_a_species_name(species_name=species_name)
 
                     park_object.add_plant(
                         Plant(
@@ -95,7 +93,6 @@ class FileIO:
                     )
 
             return park_object
-
 
 
 

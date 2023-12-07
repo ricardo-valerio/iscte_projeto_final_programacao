@@ -22,6 +22,7 @@ class ParkManager:
             "9. Sair (ou voltar ao menu anterior)\n"
         )
 
+
     def run(self):
         while True:
             self.display_menu()
@@ -53,14 +54,15 @@ class ParkManager:
                 case _:
                     print("\n❌ Escolha inválida. Tente de novo.")
 
+
     def display_existing_species(self):
         especies_registadas = FileIO.read_species_file_and_return_dict()
         print("\nLista de espécies de plantas existentes para se poder plantar:\n")
         for especie in especies_registadas.keys():
-            print(f" - {especie} (raio de ocupação: {especies_registadas[especie]['max_radius']})")
+            print(f" - {especie:<20} (raio de ocupação: {especies_registadas[especie]['max_radius']})")
+
 
     def add_plant(self):
-        # pedir ao utilizador informações sobre a planta
         especie = InputDataValidator.get_species_instance_from_species_csv_file_given_a_name()
         localizacao = InputDataValidator.get_valid_location_to_plant(in_park=self.park, species_object=especie)
         ano_plantacao = InputDataValidator.get_valid_planting_year()
@@ -72,6 +74,7 @@ class ParkManager:
         )
 
         self.park.add_plant(planta_a_adicionar=nova_planta)
+
 
     def remove_plant(self):
         if self.park.is_empty():
@@ -101,7 +104,6 @@ class ParkManager:
     def show_park_map(self):
         if self.park.is_empty():
             print("\nℹ️ O parque está vazio mas ok...")
-            # return
 
         import matplotlib.pyplot as plt
 
@@ -123,7 +125,7 @@ class ParkManager:
             ax.text(loc[i][0], loc[i][1], s="x", horizontalalignment='center', verticalalignment='center')
         plt.show()
 
-
+    # --------------------------------------------- BEGIN OF STATS ---------------------------------------------
     def display_statistics_and_info(self):
         while True:
             print(
@@ -241,11 +243,9 @@ class ParkManager:
             labels = list(set(plants_ages))
 
             # encontrar o nº de ocurrências das idades das plantas
-            # provavelmente existe alguma forma mais "pythonica" de fazer isto...
-            values = list()
-            for label in labels:
-                values.append(plants_ages.count(label))
+            values = [plants_ages.count(label) for label in labels]
 
+            # só para debug
             # print("labels", labels)
             # print("values", values)
 
@@ -275,10 +275,11 @@ class ParkManager:
             labels = self.park.get_unique_species_list()
 
             # encontrar o nº de ocurrências das idades das plantas
-            # provavelmente existe alguma forma mais "pythonica" de fazer isto...
-            values = list()
-            for label in labels:
-                values.append(plants_species.count(label))
+            values = [plants_species.count(label) for label in labels]
+            # forma mais longa de fazer o mesmo
+            # values = list()
+            # for label in labels:
+            #     values.append(plants_species.count(label))
 
             # print("labels", labels)
             # print("values", values)
@@ -290,6 +291,7 @@ class ParkManager:
             plt.ylabel('Frequência das espécies')
 
             plt.show()
+    # --------------------------------------------- END OF STATS ---------------------------------------------
 
 
     def save_to_file(self):

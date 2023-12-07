@@ -2,7 +2,7 @@ from FileIO import FileIO
 
 class InputDataValidator:
 
-    # ---------- CLASS SPECIES VALIDATIONS ------------------------------------------------------------------------------------
+    # ----------------------------- BEGIN SPECIES VALIDATIONS ---------------------------
 
     def get_valid_species_name(input_text: str) -> str:
         species_name = input_text.strip().lower()
@@ -13,6 +13,7 @@ class InputDataValidator:
                 continue
         return species_name
 
+
     def get_valid_follage_type(species_name, input_text: str) -> str:
         foliage_type = input_text.strip().lower()
         while not isinstance(foliage_type, str) or foliage_type == "" or foliage_type not in ("persistente", "caduca", "semicaduca"):
@@ -21,6 +22,7 @@ class InputDataValidator:
             except ValueError:
                 continue
         return foliage_type
+
 
     def get_valid_plant_type(species_name, input_text: str) -> str:
         plant_type = input_text.strip().lower()
@@ -31,6 +33,7 @@ class InputDataValidator:
                 continue
         return plant_type
 
+
     def get_valid_positive_radius(species_name, input_value) -> float:
         raio_max = input_value
         while not isinstance(raio_max, float) or raio_max <= 0:
@@ -39,6 +42,7 @@ class InputDataValidator:
             except ValueError:
                 continue
         return raio_max
+
 
     def get_valid_positive_avg_life(species_name, input_value) -> int:
         avg_life = input_value
@@ -49,17 +53,17 @@ class InputDataValidator:
                 continue
         return avg_life
 
+    # ----------------------------- END SPECIES VALIDATIONS -----------------------------
 
-    # -----------------------------------------------------------------------------------------------------------------------------
 
 
-    # ---------- CLASS PARK VALIDATIONS ------------------------------------------------------------------------------------
+    # ----------------------------- BEGIN PARK VALIDATIONS ---------------------------
 
     def get_valid_park_name(input_text: str) -> str:
-        park_name = input_text.strip().lower()
+        park_name = input_text.strip()
         while not isinstance(park_name, str) or park_name == "" or park_name.isnumeric():
             try:
-                park_name = input('Insira um nome válido (não pode ser vazio ou numérico) para o parque: ').strip().lower()
+                park_name = input('Insira um nome válido (não pode ser vazio ou numérico) para o parque: ').strip()
             except ValueError:
                 continue
         return park_name
@@ -70,7 +74,7 @@ class InputDataValidator:
         try:
             park_height = float(park_height)
         except Exception:
-            while not isinstance(park_height, float) or park_height <= 0 or park_height == "":
+            while not isinstance(park_height, float) or park_height <= 0:
                 try:
                     park_height = float(input(f'Insira uma largura válida [decimal positivo] para o parque {park_name}: '))
                 except ValueError:
@@ -90,46 +94,9 @@ class InputDataValidator:
                     continue
         return park_width
 
-
-    # -----------------------------------------------------------------------------------------------------------------------------
-
-
-
-    def get_species_instance_from_species_csv_file_given_a_name():
-
-        especies_registadas = FileIO.read_species_file_and_return_dict()
-
-        nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").lower()
-        while nome_da_especie_inserida not in especies_registadas.keys():
-            print("❌ Espécie inválida, por favor tente de novo.")
-            nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").lower()
-
-        # print(especies_registadas[nome_da_especie_inserida])
-        from Species import Species
-        return Species(
-            nome                = nome_da_especie_inserida,
-            tipo_folhagem       = especies_registadas[nome_da_especie_inserida]["foliage_type"],
-            produz_fruto        = bool(especies_registadas[nome_da_especie_inserida]["produces_fruit"]),
-            tipo_planta         = especies_registadas[nome_da_especie_inserida]["plant_type"],
-            raio_max            = float(especies_registadas[nome_da_especie_inserida]["max_radius"]),
-            num_medio_anos_vida = int(especies_registadas[nome_da_especie_inserida]["avg_lifespan"])
-        )
-
-    def validate_float_value(question):
-        float_value = input(question)
-        try:
-            float_value = float(float_value)
-        except Exception:
-            while not isinstance(float_value, float) or float_value <= 0:
-                try:
-                    float_value = float(input(f'Insira um [decimal positivo] para a {question}'))
-                except ValueError:
-                    continue
-        return float_value
-
-    def get_valid_location_to_plant(in_park, species_object) -> tuple[float, float]:
-        localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
-                      InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
+        def get_valid_location_to_plant(in_park, species_object) -> tuple[float, float]:
+            localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
+                          InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
 
         # verificar se a localização está ocupada
         is_location_occupied = in_park.is_location_occupied_by_another_plant(at_coords=localizacao)
@@ -160,13 +127,17 @@ class InputDataValidator:
         return localizacao
 
 
-    def verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object):
+    def verify_if_its_not_between_park_boundaries(localizacao: tuple, in_park: object, species_object: object) -> bool:
         especies_registadas = FileIO.read_species_file_and_return_dict()
         nome_da_especie_criada = species_object.nome
-        return localizacao[0] + especies_registadas[nome_da_especie_criada]["max_radius"] > in_park.largura or localizacao[1] + especies_registadas[nome_da_especie_criada]["max_radius"] > in_park.comprimento
+
+        return (localizacao[0] + especies_registadas[nome_da_especie_criada]["max_radius"] >= in_park.largura or \
+                localizacao[1] + especies_registadas[nome_da_especie_criada]["max_radius"] >= in_park.comprimento) or \
+               (localizacao[0] - especies_registadas[nome_da_especie_criada]["max_radius"] <= 0 or \
+                localizacao[1] - especies_registadas[nome_da_especie_criada]["max_radius"] <= 0)
 
 
-    def verify_if_there_is_intersection(localizacao, in_park, species_object):
+    def verify_if_there_is_intersection(localizacao: tuple, in_park: object, species_object: object) -> bool:
         especies_registadas = FileIO.read_species_file_and_return_dict()
         nome_da_especie_criada = species_object.nome
 
@@ -180,30 +151,86 @@ class InputDataValidator:
                 return True
         return False
 
+    # ----------------------------- END PARK VALIDATIONS -----------------------------
 
-    def get_valid_planting_year():
 
+
+
+    def get_species_instance_from_species_csv_file_given_a_name() -> object:
+
+        especies_registadas = FileIO.read_species_file_and_return_dict()
+
+        nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").lower()
+        while nome_da_especie_inserida not in especies_registadas.keys():
+            print("❌ Espécie inválida, por favor tente de novo.")
+            nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").lower()
+
+        # print(especies_registadas[nome_da_especie_inserida])
+        from Species import Species
+        return Species(
+            nome                = nome_da_especie_inserida,
+            tipo_folhagem       = especies_registadas[nome_da_especie_inserida]["foliage_type"],
+            produz_fruto        = bool(especies_registadas[nome_da_especie_inserida]["produces_fruit"]),
+            tipo_planta         = especies_registadas[nome_da_especie_inserida]["plant_type"],
+            raio_max            = float(especies_registadas[nome_da_especie_inserida]["max_radius"]),
+            num_medio_anos_vida = int(especies_registadas[nome_da_especie_inserida]["avg_lifespan"])
+        )
+
+
+    def validate_float_value(question: str) -> float:
+        float_value = input(question)
+        try:
+            float_value = float(float_value)
+            if float_value <= 0:
+                raise Exception
+        except Exception:
+            while not isinstance(float_value, float) or float_value <= 0:
+                try:
+                    float_value = float(input(f'Insira um [decimal positivo] para a {question}'))
+                except ValueError:
+                    continue
+        return float_value
+
+
+    def get_valid_planting_year() -> int:
         from datetime import date
         ano_vigente = date.today().year
 
-        ano_de_plantacao_inserido = int(input("Ano de plantação da planta: "))
+        ano_de_plantacao_inserido = input("Ano de plantação da planta: ")
 
-        while ano_de_plantacao_inserido <= 0 or ano_de_plantacao_inserido > ano_vigente:
+        try:
+            ano_de_plantacao_inserido = int(ano_de_plantacao_inserido)
             if ano_de_plantacao_inserido <= 0:
                 print("❌ Erro. O ano inserido tem de ser um valor inteiro positivo. Tente de novo.")
-            else:
+                raise Exception
+            elif ano_de_plantacao_inserido > ano_vigente:
                 print("❌ Erro. O ano inserido não pode ser maior que o ano vigente. Tente de novo.")
-            ano_de_plantacao_inserido = int(input("Ano de plantação da planta: "))
+                raise Exception
+        except Exception:
+            while not isinstance(ano_de_plantacao_inserido, int) or \
+                  ano_de_plantacao_inserido <= 0 or \
+                  ano_de_plantacao_inserido > ano_vigente:
+
+                if not isinstance(ano_de_plantacao_inserido, int) or \
+                   ano_de_plantacao_inserido <= 0:
+                    print("❌ Erro. O ano inserido tem de ser um valor inteiro positivo. Tente de novo.")
+                else:
+                    print("❌ Erro. O ano inserido não pode ser maior que o ano vigente. Tente de novo.")
+
+                try:
+                    ano_de_plantacao_inserido = int(input("Ano de plantação da planta: "))
+                except ValueError:
+                    continue
 
         return ano_de_plantacao_inserido
 
 
-    def get_park_from_file():
+    def get_park_from_file() -> object or None:
         nome_parque = input("Indique o nome do parque (que corresponde ao nome do ficheiro) a carregar: ")
         ficheiro_parque = nome_parque.strip().lower().replace(' ', '_') + ".csv"
 
         from os import listdir as list_dir
-        csv_files = [f for f in list_dir(path="./csv_files/parks/") if f.endswith('.csv')]
+        csv_files = [file for file in list_dir(path="./csv_files/parks/") if file.endswith('.csv')]
         # print("Ficheiros CSV existentes dos parques:", csv_files)
 
         if ficheiro_parque in csv_files:
@@ -214,10 +241,9 @@ class InputDataValidator:
             return None
 
 
-
-    def get_species_object_info_give_a_species_name(species_name: str):
-
+    def get_species_object_info_given_a_species_name(species_name: str) -> object or None:
         especies_registadas = FileIO.read_species_file_and_return_dict()
+
         if species_name in especies_registadas:
             from Species import Species
             return Species(
@@ -232,6 +258,7 @@ class InputDataValidator:
             print("❌ Erro ao processar uma espécie.")
 
 
+
 if __name__ == "__main__":
     """
     Este if permite correr o ficheiro como um
@@ -241,15 +268,3 @@ if __name__ == "__main__":
     classe de forma isolada.
     """
 
-    # obter uma instância de uma Espécie a partir dos registos existentes no csv
-    # print(InputDataValidator.get_species_instance_from_species_csv_file_given_a_name())
-
-
-    # from Park import Park
-    # obter uma localização de plantação válida num determinado parque
-    # park_1 = Park(name="Central Park", planting_area=1000)
-    # InputDataValidator.get_valid_location_to_plant(in_park=park_1)
-
-
-    # obter ano de plantação válido
-    # InputDataValidator.get_valid_planting_year()

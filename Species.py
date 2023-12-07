@@ -16,32 +16,40 @@ class Species:
         self.__raio_max            = InputDataValidator.get_valid_positive_radius(species_name=self.__nome, input_value=raio_max)
         self.__num_medio_anos_vida = InputDataValidator.get_valid_positive_avg_life(species_name=self.__nome, input_value=num_medio_anos_vida)
 
+
     @property
     def nome(self) -> str:
         return self.__nome
+
 
     @property
     def tipo_folhagem(self) -> str:
         return self.__tipo_folhagem
 
+
     @property
     def produz_fruto(self) -> bool:
         return self.__produz_fruto
+
 
     @property
     def tipo_planta(self) -> str:
         return self.__tipo_planta
 
+
     @property
     def raio_max(self) -> float:
         return self.__raio_max
+
 
     @property
     def num_medio_anos_vida(self) -> int:
         return self.__num_medio_anos_vida
 
+
     def area_de_ocupacao_circular(self) -> None:
         return round(math_pi * (self.__raio_max ** 2), 2)
+
 
     def __str__(self) -> str:
         return f"\nNome da espécie: {self.__nome}\n"                         \
@@ -50,6 +58,7 @@ class Species:
                f"Produz fruto?: {self.__produz_fruto}\n"                     \
                f"Raio máximo de ocupação: {self.__raio_max}\n"               \
                f"Número médio de anos de vida: {self.__num_medio_anos_vida}\n"
+
 
     def __eq__(self, other) -> bool:
         return isinstance(other, Species) and self.__nome == other.__nome

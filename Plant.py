@@ -10,9 +10,11 @@ class Plant:
         self.localizacao_coords = localizacao_coords
         self.__ano_plantacao    = ano_plantacao
 
+
     @property
     def especie(self) -> Species:
         return self.__especie
+
 
     @property
     def ano_plantacao(self) -> int:
@@ -23,7 +25,7 @@ class Plant:
         return self.__especie.area_de_ocupacao_circular()
 
 
-    def idade(self, ano_a_verificar) -> int:
+    def idade(self, ano_a_verificar: int) -> int:
         if ano_a_verificar < self.__ano_plantacao:
             print(
                 f"A planta {self.especie.nome} "

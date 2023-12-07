@@ -9,6 +9,7 @@ class ParkManagementExtra:
     def __init__(self):
         self.parks = list()
 
+
     def display_menu(self):
         print(
             f"\n------- SISTEMA DE GESTÃO DOS PARQUES -------\n\n"
@@ -81,7 +82,7 @@ class ParkManagementExtra:
 
         nome_parque = input("Indique o nome do parque a remover: ").lower()
         for park in self.parks:
-            if nome_parque == park.name:
+            if nome_parque == park.name.lower():
                 self.parks.remove(park)
                 print("\n✅ Parque removido com sucesso.")
                 return
