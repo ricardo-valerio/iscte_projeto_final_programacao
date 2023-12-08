@@ -53,10 +53,11 @@ class ParkManager:
 
 
     def display_existing_species(self):
-        especies_registadas = FileIO.read_species_file_and_return_dict()
+        # https://www.freecodecamp.org/news/python-sort-dictionary-by-key/
+        especies_registadas = dict(sorted(FileIO.read_species_file_and_return_dict().items()))
         print("\nLista de espécies de plantas existentes para se poder plantar:\n")
         for especie in especies_registadas.keys():
-            print(f" - {especie:<20} (raio de ocupação: {especies_registadas[especie]['max_radius']})")
+            print(f" - {especie:<25} (raio de ocupação: {especies_registadas[especie]['max_radius']})")
 
 
     def add_plant(self):

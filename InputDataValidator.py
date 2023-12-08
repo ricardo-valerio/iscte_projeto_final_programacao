@@ -14,7 +14,7 @@ class InputDataValidator:
         return species_name
 
 
-    def get_valid_follage_type(species_name, input_text: str) -> str:
+    def get_valid_follage_type(species_name: str, input_text: str) -> str:
         foliage_type = input_text.strip().lower()
         while not isinstance(foliage_type, str) or foliage_type == "" or foliage_type not in ("persistente", "caduca", "semicaduca"):
             try:
@@ -24,7 +24,15 @@ class InputDataValidator:
         return foliage_type
 
 
-    def get_valid_plant_type(species_name, input_text: str) -> str:
+    def does_it_produce_fruit(input_text: str) -> bool:
+        yes_or_no = input_text.strip().lower()
+        if yes_or_no in ("não", 'n', "no", "nope", '0'):
+            return False
+        else:
+            return True
+
+
+    def get_valid_plant_type(species_name: str, input_text: str) -> str:
         plant_type = input_text.strip().lower()
         while plant_type == "" or plant_type not in ("árvore", "arbusto"):
             try:
@@ -34,23 +42,39 @@ class InputDataValidator:
         return plant_type
 
 
-    def get_valid_positive_radius(species_name, input_value) -> float:
+    def get_valid_positive_radius(species_name: str, input_value: str) -> float:
         raio_max = input_value
-        while not isinstance(raio_max, float) or raio_max <= 0:
-            try:
-                raio_max = float(input(f'Insira um raio válido [decimal positivo] para a espécie {species_name}: ').strip())
-            except ValueError:
-                continue
+        try:
+            raio_max = float(raio_max)
+
+            if raio_max <= 0:
+                raise Exception
+
+        except Exception:
+            while not isinstance(raio_max, float) or raio_max <= 0:
+                try:
+                    raio_max = float(input(f'Insira um raio válido [decimal positivo] para a espécie {species_name}: ').strip())
+                except ValueError:
+                    continue
+
         return raio_max
 
 
-    def get_valid_positive_avg_life(species_name, input_value) -> int:
+    def get_valid_positive_avg_life(species_name: str, input_value: str) -> int:
         avg_life = input_value
-        while not isinstance(avg_life, int) or avg_life <= 0:
-            try:
-                avg_life = int(input(f'Insira uma idade média em anos válido [inteiro positivo] para a espécie {species_name}: ').strip())
-            except ValueError:
-                continue
+        try:
+            avg_life = int(avg_life)
+
+            if avg_life <= 0:
+                raise Exception
+
+        except Exception:
+            while not isinstance(avg_life, int) or avg_life <= 0:
+                try:
+                    avg_life = int(input(f'Insira uma idade média em anos válido [inteiro positivo] para a espécie {species_name}: ').strip())
+                except ValueError:
+                    continue
+
         return avg_life
 
     # ----------------------------- END SPECIES VALIDATIONS -----------------------------
@@ -81,11 +105,9 @@ class InputDataValidator:
             while not isinstance(park_width, float) or park_width <= 0:
 
                 if not isinstance(park_width, float):
-                    print("O valor inserido tem de ser um decimal positivo")
+                    print("❌ Erro. O valor inserido tem de ser um decimal positivo.")
                 elif park_width <= 0:
-                    print("O valor decimal tem de ser positivo")
-                else:
-                    print("O valor do comprimento tem de ser maior ou igual que a largura")
+                    print("❌ Erro. O valor decimal tem de ser positivo.")
 
                 try:
                     park_width = float(input(f'Insira uma largura válida [decimal positivo] para o parque {park_name}: ').strip())
@@ -106,11 +128,11 @@ class InputDataValidator:
             while not isinstance(park_length, float) or park_length <= 0 or park_length < park_width:
 
                 if not isinstance(park_length, float):
-                    print("O valor inserido tem de ser um float")
+                    print("❌ Erro. O valor inserido tem de ser um decimal positivo.")
                 elif park_length <= 0:
-                    print("O valor decimal tem de ser positivo")
+                    print("❌ Erro. O valor decimal tem de ser positivo.")
                 else:
-                    print("O valor do comprimento tem de ser maior ou igual que a largura")
+                    print("❌ Erro. O valor do comprimento tem de ser maior ou igual que a largura.")
 
                 try:
                     park_length = float(input(f'Insira um comprimento válido [decimal positivo] para o parque "{park_name}": ').strip())

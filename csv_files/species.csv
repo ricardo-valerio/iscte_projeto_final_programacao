@@ -2,3 +2,93 @@ castanheiro,caduca,True,árvore,8.1,100
 cedro,persistente,False,árvore,1.5,80
 pinheiro manso,persistente,True,árvore,3.1,100
 loureiro,persistente,False,arbusto,3.0,40
+carvalho,caduca,True,árvore,10.0,150
+azevinho,persistente,True,arbusto,1.0,30
+rosa,caduca,True,arbusto,0.5,10
+lírio,persistente,False,arbusto,0.2,5
+oliveira,persistente,True,árvore,6.0,200
+eucalipto,caduca,True,árvore,7.0,60
+limoeiro,caduca,True,árvore,2.5,30
+aloe vera,persistente,True,arbusto,0.3,8
+hibisco,caduca,True,arbusto,2.0,15
+figueira,caduca,True,árvore,5.8,120
+abrunheiro,caduca,True,árvore,4.2,80
+azálea,persistente,True,arbusto,1.2,25
+salgueiro,caduca,True,árvore,6.5,70
+verbena,persistente,True,arbusto,0.7,12
+orquídea,persistente,True,arbusto,0.1,6
+mimosa,persistente,False,árvore,4.8,60
+tomilho,persistente,True,arbusto,0.25,4
+manjericão,caduca,True,arbusto,0.3,3
+malmequer,caduca,True,arbusto,0.2,2
+alfazema,persistente,False,arbusto,0.4,5
+violeta,persistente,True,arbusto,0.15,3
+dama da noite,persistente,True,arbusto,2.5,10
+girassol,caduca,True,arbusto,0.6,4
+cravo,caduca,True,arbusto,0.3,5
+copo de leite,persistente,False,arbusto,0.2,3
+sabugueiro,caduca,True,árvore,4.5,40
+magnólia,persistente,True,árvore,5.0,80
+maracujá,caduca,True,arbusto,2.0,5
+jacinto,persistente,True,arbusto,0.2,3
+hortelã,persistente,True,arbusto,0.3,2
+dente-de-leão,caduca,True,arbusto,0.1,1
+giesta,caduca,False,arbusto,1.0,8
+alfineteiro,persistente,False,arbusto,0.1,2
+trigo,caduca,True,arbusto,0.3,4
+aveleira,persistente,True,árvore,3.5,50
+beterraba,caduca,True,arbusto,0.2,3
+morangueiro,persistente,True,arbusto,0.2,2
+banana,caduca,True,árvore,4.0,15
+melância,caduca,True,arbusto,2.0,3
+maria sem vergonha,persistente,True,arbusto,0.15,2
+salvia,persistente,True,arbusto,0.3,4
+tília,persistente,True,árvore,8.0,120
+almo,persistente,False,árvore,6.5,80
+marcela,caduca,True,arbusto,0.2,3
+glicínia,persistente,True,árvore,4.5,70
+cacto,persistente,True,arbusto,0.2,10
+alfazema dos açores,persistente,False,arbusto,0.4,6
+freixo,caduca,True,árvore,6.0,100
+camélia,persistente,True,arbusto,2.5,40
+sorgo,caduca,True,arbusto,0.5,5
+cipreste,persistente,False,árvore,5.0,60
+alfazema das canárias,persistente,True,arbusto,0.3,4
+murta,persistente,True,arbusto,1.2,30
+junca,caduca,False,arbusto,0.1,2
+alecrim,persistente,True,arbusto,0.3,5
+lentilha,caduca,True,arbusto,0.3,4
+hortensia,persistente,True,arbusto,1.5,25
+funcho,persistente,True,arbusto,0.2,3
+azevem,caduca,False,arbusto,0.1,1
+romazeira,persistente,True,árvore,3.0,15
+medronheiro,persistente,True,árvore,4.0,50
+mirtilo,persistente,True,arbusto,0.5,8
+arnica,persistente,True,arbusto,0.2,3
+cedro do bucaco,persistente,False,árvore,3.5,70
+manjerona,persistente,True,arbusto,0.25,4
+avelã,persistente,True,árvore,3.0,40
+agriao,caduca,True,arbusto,0.3,2
+bardana,persistente,True,arbusto,0.5,3
+louro,caduca,True,árvore,4.0,60
+canhamo,caduca,True,arbusto,2.0,4
+cardo,persistente,False,arbusto,0.2,2
+murchao,caduca,True,arbusto,0.2,3
+calendula,persistente,True,arbusto,0.2,2
+coco,caduca,True,árvore,6.0,80
+camomila,persistente,True,arbusto,0.2,2
+nogueira,persistente,True,árvore,5.0,60
+malmequer maior,persistente,True,arbusto,0.3,2
+hissopo,persistente,True,arbusto,0.2,3
+azinheira,persistente,True,árvore,8.0,150
+vagem,persistente,True,arbusto,0.2,4
+oregão,persistente,True,arbusto,0.3,3
+sandal,persistente,False,árvore,4.5,80
+hortensia branca,persistente,True,arbusto,1.2,25
+jacinto do campo,caduca,True,arbusto,0.2,3
+lobélia,persistente,True,arbusto,0.15,2
+tomateiro,caduca,True,arbusto,1.0,4
+alquequenge,persistente,True,arbusto,0.2,3
+louro das abelhas,persistente,True,arbusto,1.5,30
+begonvília,caduca,False,arbusto,0.5,8
+pessegueiro,persistente,True,árvore,3.0,20

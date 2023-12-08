@@ -14,8 +14,9 @@ class ParkManagementExtra:
         while True:
             print(
                 f"\n------- SISTEMA DE GESTÃO DOS PARQUES -------\n\n"
+                "0. Adicionar espécie\n"
                 "1. Adicionar parque\n"
-                "2. Carregar parque de um ficheiro \n"
+                "2. Carregar parque de um ficheiro\n"
                 "3. Remover parque\n"
                 "4. Listar parques\n"
                 "5. Gerir parque\n"
@@ -26,6 +27,8 @@ class ParkManagementExtra:
 
             # https://www.geeksforgeeks.org/python-match-case-statement/
             match choice:
+                case '0':
+                    self.add_species()
                 case '1':
                     self.add_park()
                 case '2':
@@ -41,6 +44,50 @@ class ParkManagementExtra:
                     break
                 case _:
                     print("\n❌ Escolha inválida. Tente de novo.")
+
+    def add_species(self):
+        nome_especie = InputDataValidator.get_valid_species_name(
+                            input_text=input("Insira o nome da espécie a adicionar ao sistema: ")
+                       )
+        tipo_folhagem = InputDataValidator.get_valid_follage_type(
+                            species_name=nome_especie,
+                            input_text=input("Insira o tipo de folhagem ['persistente', 'caduca', 'semicaduca']: ")
+                        )
+        produz_fruto = InputDataValidator.does_it_produce_fruit(
+                            input_text=input("Produz fruto? (s/n): ")
+                       )
+
+        tipo_planta = InputDataValidator.get_valid_plant_type(
+                            species_name=nome_especie,
+                            input_text=input("Insira o tipo de planta ['árvore', 'arbusto']: ")
+                      )
+
+        max_radius = InputDataValidator.get_valid_positive_radius(
+                            species_name=nome_especie,
+                            input_value=input("Insira o raio da área circular de ocupação da espécie: ")
+                     )
+        # print("ora ora max_radius:", max_radius)
+
+        num_medio_anos_vida = InputDataValidator.get_valid_positive_avg_life(
+                                    species_name=nome_especie,
+                                    input_value=input("Insira o nº médio de anos de vida da espécie: ")
+                              )
+        # print("ora ora num_medio_anos_vida:", num_medio_anos_vida)
+
+        added_with_success = FileIO.add_species_to_file(
+                                nome_especie,
+                                tipo_folhagem,
+                                produz_fruto,
+                                tipo_planta,
+                                max_radius,
+                                num_medio_anos_vida
+                             )
+
+        if added_with_success:
+            print("\n✅ Espécie adicionada ao sistema com sucesso.")
+        else:
+            print("\n❌ Erro ao adicionar espécie ao sistema.")
+
 
 
     def add_park(self) -> None:
@@ -58,17 +105,17 @@ class ParkManagementExtra:
                              )
         novo_parque = Park(name=nome_parque, largura=largura_parque, comprimento=comprimento_parque)
         self.parks.append(novo_parque)
-        print("\n✅ Parque adicionado com sucesso.")
+        print("\n✅ Parque adicionado ao sistema com sucesso.")
 
 
     def load_park_from_file(self):
         novo_parque = InputDataValidator.get_park_from_file()
         if novo_parque:
             if novo_parque.name in [park.name for park in self.parks]:
-                print("\nℹ️ O parque já existe no sistema.")
+                print("\nℹ️ O parque inserido já existe no sistema.")
             else:
                 self.parks.append(novo_parque)
-                print("\n✅ Parque carregado com sucesso.")
+                print("\n✅ Parque carregado no sistema com sucesso.")
         else:
             print("\n❌ Erro ao carregar o parque.")
 
@@ -82,7 +129,7 @@ class ParkManagementExtra:
         for park in self.parks:
             if nome_parque == park.name.lower():
                 self.parks.remove(park)
-                print("\n✅ Parque removido com sucesso.")
+                print("\n✅ Parque removido do sistema com sucesso.")
                 return
 
         print("\nℹ️ O nome do parque inserido não existe no sistema.")
