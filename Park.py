@@ -5,10 +5,10 @@ from math import sqrt as math_sqrt
 
 class Park:
     def __init__(self, name: str, largura: float, comprimento: float):
-        self.__name = name
-        self.__largura = InputDataValidator.get_valid_park_height(park_name=self.__name, input_value=largura)
-        self.__comprimento = InputDataValidator.get_valid_park_width(park_name=self.__name, input_value=comprimento)
-        self.__plants = list()
+        self.__name        = name
+        self.__largura     = largura
+        self.__comprimento = comprimento
+        self.__plants      = list()
 
     @property
     def name(self) -> str:
@@ -38,7 +38,7 @@ class Park:
             delas não se verifique verdadeira.
         """
         # verificar se localização está dentro dos limites do parque
-        if self.is_within_park_boundaries(plant_to_add=planta_a_adicionar):
+        if self.is_plant_to_add_within_park_boundaries(plant_to_add=planta_a_adicionar):
             # Verificar se há espaço antes de adicionar
             if self.is_there_space_available_for_the_plant(planta_a_adicionar):
                 # verificar se localização está ocupada antes de adicionar
@@ -94,7 +94,11 @@ class Park:
         return self.planting_area - self.total_area_occupied()
 
 
-    def is_within_park_boundaries(self, plant_to_add):
+    def is_given_location_within_park_boundaries(self, location) -> bool:
+        return (0 < location[0] < self.largura) and (0 < location[1] < self.comprimento)
+
+
+    def is_plant_to_add_within_park_boundaries(self, plant_to_add):
         return (plant_to_add.localizacao_coords[0] + plant_to_add.especie.raio_max < self.largura and \
                 plant_to_add.localizacao_coords[1] + plant_to_add.especie.raio_max < self.comprimento) and \
                (plant_to_add.localizacao_coords[0] - plant_to_add.especie.raio_max > 0 and \

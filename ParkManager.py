@@ -7,25 +7,22 @@ class ParkManager:
         self.park = park
 
 
-    def display_menu(self):
-        print(
-            f"\nGESTÃO DO PARQUE: {self.park.name}\n\n"
-            "0. Listar espécies de plantas existentes para se poder plantar\n"
-            "1. Adicionar planta\n"
-            "2. Remover planta\n"
-            "3. Listar plantas existentes no parque\n"
-            "4. Mostrar área ocupada\n"
-            "5. Mostrar a área disponível para plantação\n"
-            "6. Mostrar o mapa do parque\n"
-            "7. Estatísticas e informações\n"
-            "8. Guardar o parque num ficheiro\n"
-            "9. Sair (ou voltar ao menu anterior)\n"
-        )
-
-
     def run(self):
         while True:
-            self.display_menu()
+            print(
+                f"\nGESTÃO DO PARQUE: {self.park.name}\n\n"
+                "0. Listar espécies de plantas existentes para se poder plantar\n"
+                "1. Adicionar planta\n"
+                "2. Remover planta\n"
+                "3. Listar plantas existentes no parque\n"
+                "4. Mostrar área ocupada\n"
+                "5. Mostrar a área disponível para plantação\n"
+                "6. Mostrar o mapa do parque\n"
+                "7. Estatísticas e informações\n"
+                "8. Guardar o parque num ficheiro\n"
+                "9. Sair (ou voltar ao menu anterior)\n"
+            )
+
             choice = input("Escolha uma opção (1-9): ")
 
             # https://www.geeksforgeeks.org/python-match-case-statement/
@@ -123,6 +120,7 @@ class ParkManager:
             circle = plt.Circle(loc[i], raio[i], color='g', alpha=0.4)
             ax.add_patch(circle)
             ax.text(loc[i][0], loc[i][1], s="x", horizontalalignment='center', verticalalignment='center')
+        plt.title(f'Mapa do parque: {self.park.name}')
         plt.show()
 
     # --------------------------------------------- BEGIN OF STATS ---------------------------------------------

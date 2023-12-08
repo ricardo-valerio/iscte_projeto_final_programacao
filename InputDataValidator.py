@@ -38,7 +38,7 @@ class InputDataValidator:
         raio_max = input_value
         while not isinstance(raio_max, float) or raio_max <= 0:
             try:
-                raio_max = float(input(f'Insira um raio válido [decimal positivo] para a espécie {species_name}: '))
+                raio_max = float(input(f'Insira um raio válido [decimal positivo] para a espécie {species_name}: ').strip())
             except ValueError:
                 continue
         return raio_max
@@ -48,7 +48,7 @@ class InputDataValidator:
         avg_life = input_value
         while not isinstance(avg_life, int) or avg_life <= 0:
             try:
-                avg_life = int(input(f'Insira uma idade média em anos válido [inteiro positivo] para a espécie {species_name}: '))
+                avg_life = int(input(f'Insira uma idade média em anos válido [inteiro positivo] para a espécie {species_name}: ').strip())
             except ValueError:
                 continue
         return avg_life
@@ -69,65 +69,110 @@ class InputDataValidator:
         return park_name
 
 
-    def get_valid_park_height(park_name, input_value) -> float:
-        park_height = input_value
-        try:
-            park_height = float(park_height)
-        except Exception:
-            while not isinstance(park_height, float) or park_height <= 0:
-                try:
-                    park_height = float(input(f'Insira uma largura válida [decimal positivo] para o parque {park_name}: '))
-                except ValueError:
-                    continue
-        return park_height
-
-
     def get_valid_park_width(park_name, input_value) -> float:
         park_width = input_value
         try:
             park_width = float(park_width)
+
+            if park_width <= 0:
+                raise Exception
+
         except Exception:
             while not isinstance(park_width, float) or park_width <= 0:
+
+                if not isinstance(park_width, float):
+                    print("O valor inserido tem de ser um decimal positivo")
+                elif park_width <= 0:
+                    print("O valor decimal tem de ser positivo")
+                else:
+                    print("O valor do comprimento tem de ser maior ou igual que a largura")
+
                 try:
-                    park_width = float(input(f'Insira um comprimento válido [decimal positivo] para o parque {park_name}: '))
+                    park_width = float(input(f'Insira uma largura válida [decimal positivo] para o parque {park_name}: ').strip())
                 except ValueError:
                     continue
         return park_width
 
-        def get_valid_location_to_plant(in_park, species_object) -> tuple[float, float]:
-            localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
-                          InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
+
+    def get_valid_park_length(park_name, park_width, input_value) -> float:
+        park_length = input_value
+        try:
+            park_length = float(park_length)
+
+            if park_length < park_width:
+                raise Exception
+
+        except Exception:
+            while not isinstance(park_length, float) or park_length <= 0 or park_length < park_width:
+
+                if not isinstance(park_length, float):
+                    print("O valor inserido tem de ser um float")
+                elif park_length <= 0:
+                    print("O valor decimal tem de ser positivo")
+                else:
+                    print("O valor do comprimento tem de ser maior ou igual que a largura")
+
+                try:
+                    park_length = float(input(f'Insira um comprimento válido [decimal positivo] para o parque "{park_name}": ').strip())
+                except ValueError:
+                    continue
+        return park_length
+
+
+    def get_valid_location_to_plant(in_park, species_object) -> tuple[float, float]:
+        localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
+                      InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
+
+        # verificar se a localização dada está dentro do parque
+        is_location_not_within_park_boundaries = not in_park.is_given_location_within_park_boundaries(localizacao)
 
         # verificar se a localização está ocupada
         is_location_occupied = in_park.is_location_occupied_by_another_plant(at_coords=localizacao)
+
         # verificar se existe interseção de área de ocupação
         is_there_intersection = InputDataValidator.verify_if_there_is_intersection(localizacao, in_park, species_object)
-        # verificar se está dentro dos limites do parque
-        is_not_within_park_boundaries = InputDataValidator.verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object)
 
-        while is_location_occupied or is_there_intersection or is_not_within_park_boundaries:
+        # verificar se a área circular da planta está dentro dos limites do parque
+        is_plant_area_not_within_park_boundaries = InputDataValidator.verify_if_plant_area_is_not_between_park_boundaries(localizacao, in_park, species_object)
 
-            if is_location_occupied:
-                print("❌ A localização inserida já está ocupada.")
+        while is_location_not_within_park_boundaries or \
+              is_location_occupied                   or \
+              is_there_intersection                  or \
+              is_plant_area_not_within_park_boundaries:
+
+            if is_location_not_within_park_boundaries:
+                print(
+                    f"\n❌ A localização inserida não está dentro dos limites do parque.\n"
+                    f"O parque tem de largura: {in_park.largura} e comprimento: {in_park.comprimento}.\n"
+                )
+            elif is_location_occupied:
+                print("\n❌ A localização inserida já está ocupada por outra planta.\n")
             elif is_there_intersection:
                 print("\n❌ Não foi possível adicionar a planta pois existia sobreposição com outra planta.\n")
-            elif is_not_within_park_boundaries:
-                print("\n❌ A Localização da planta não está dentro dos limites do parque.\n")
+            elif is_plant_area_not_within_park_boundaries:
+                especies_registadas = FileIO.read_species_file_and_return_dict()
+                nome_da_especie_criada = species_object.nome
+                print(
+                    f"\n❌ A área da planta não ficará dentro dos limites do parque. \n"
+                    f"O parque tem de largura: {in_park.largura} e comprimento: {in_park.comprimento}.\n"
+                    f"A planta a adicionar ao parque tem raio: {especies_registadas[nome_da_especie_criada]['max_radius']}.\n"
+                )
 
             localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
                           InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
 
-            # verificar se a localização está ocupada
+            is_location_not_within_park_boundaries = not in_park.is_given_location_within_park_boundaries(localizacao)
+
             is_location_occupied = in_park.is_location_occupied_by_another_plant(at_coords=localizacao)
-            # verificar se existe interseção de área de ocupação
+
             is_there_intersection = InputDataValidator.verify_if_there_is_intersection(localizacao, in_park, species_object)
-            # verificar se está dentro dos limites do parque
-            is_not_within_park_boundaries = InputDataValidator.verify_if_its_not_between_park_boundaries(localizacao, in_park, species_object)
+
+            is_plant_area_not_within_park_boundaries = InputDataValidator.verify_if_plant_area_is_not_between_park_boundaries(localizacao, in_park, species_object)
 
         return localizacao
 
 
-    def verify_if_its_not_between_park_boundaries(localizacao: tuple, in_park: object, species_object: object) -> bool:
+    def verify_if_plant_area_is_not_between_park_boundaries(localizacao: tuple, in_park: object, species_object: object) -> bool:
         especies_registadas = FileIO.read_species_file_and_return_dict()
         nome_da_especie_criada = species_object.nome
 
@@ -160,10 +205,10 @@ class InputDataValidator:
 
         especies_registadas = FileIO.read_species_file_and_return_dict()
 
-        nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").lower()
+        nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").strip().lower()
         while nome_da_especie_inserida not in especies_registadas.keys():
             print("❌ Espécie inválida, por favor tente de novo.")
-            nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").lower()
+            nome_da_especie_inserida = input("Insira o nome da espécie da planta: ").strip().lower()
 
         # print(especies_registadas[nome_da_especie_inserida])
         from Species import Species
@@ -196,7 +241,7 @@ class InputDataValidator:
         from datetime import date
         ano_vigente = date.today().year
 
-        ano_de_plantacao_inserido = input("Ano de plantação da planta: ")
+        ano_de_plantacao_inserido = input("Ano de plantação da planta: ").strip()
 
         try:
             ano_de_plantacao_inserido = int(ano_de_plantacao_inserido)
@@ -218,7 +263,7 @@ class InputDataValidator:
                     print("❌ Erro. O ano inserido não pode ser maior que o ano vigente. Tente de novo.")
 
                 try:
-                    ano_de_plantacao_inserido = int(input("Ano de plantação da planta: "))
+                    ano_de_plantacao_inserido = int(input("Ano de plantação da planta: ").strip())
                 except ValueError:
                     continue
 

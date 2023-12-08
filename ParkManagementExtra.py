@@ -10,21 +10,18 @@ class ParkManagementExtra:
         self.parks = list()
 
 
-    def display_menu(self):
-        print(
-            f"\n------- SISTEMA DE GESTÃO DOS PARQUES -------\n\n"
-            "1. Adicionar parque\n"
-            "2. Carregar parque de um ficheiro \n"
-            "3. Remover parque\n"
-            "4. Listar parques\n"
-            "5. Gerir parque\n"
-            "6. Sair\n"
-        )
-
-
     def run(self):
         while True:
-            self.display_menu()
+            print(
+                f"\n------- SISTEMA DE GESTÃO DOS PARQUES -------\n\n"
+                "1. Adicionar parque\n"
+                "2. Carregar parque de um ficheiro \n"
+                "3. Remover parque\n"
+                "4. Listar parques\n"
+                "5. Gerir parque\n"
+                "6. Sair\n"
+            )
+
             choice = input("Escolha uma opção (1-6): ")
 
             # https://www.geeksforgeeks.org/python-match-case-statement/
@@ -50,12 +47,13 @@ class ParkManagementExtra:
         nome_parque = InputDataValidator.get_valid_park_name(
                          input_text=input("Insira o nome do parque: ")
                       )
-        largura_parque = InputDataValidator.get_valid_park_height(
+        largura_parque = InputDataValidator.get_valid_park_width(
                             park_name=nome_parque,
                             input_value=input("Insira a largura do parque (metros): ")
                          )
-        comprimento_parque = InputDataValidator.get_valid_park_width(
+        comprimento_parque = InputDataValidator.get_valid_park_length(
                                 park_name=nome_parque,
+                                park_width=largura_parque,
                                 input_value=input("Insira o comprimento do parque (metros): ")
                              )
         novo_parque = Park(name=nome_parque, largura=largura_parque, comprimento=comprimento_parque)
