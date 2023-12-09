@@ -2,7 +2,7 @@
 [https://github.com/ricardo-valerio/iscte_projeto_final_programacao](https://github.com/ricardo-valerio/iscte_projeto_final_programacao)
 
 
-## Python Version Used: 3.11.3
+### Python version used: 3.11.3
 
 
 ## Description
@@ -55,7 +55,7 @@ Para cada parque é definido um ponto base, a partir do qual são calculadas tod
 	            ...etc...
 
 
-### Dependencies
+## Dependencies
 
 * Python version >= 3.10 because of the "match" keyword
 * matplotlib (pip install matplotlib  ou  py -m pip install matplotlib)
