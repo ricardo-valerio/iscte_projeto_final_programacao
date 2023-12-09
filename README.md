@@ -13,18 +13,18 @@ A Gestão Verde administra diversos parques e jardins na região e está a traba
 
 Dado um determinado parque, deverá ser possível:
 
-	-   registar plantas nesse parque, dada a sua espécie, localização e o ano de plantação;
-	-   apagar plantas;
-	-   listar as plantas existentes;
-	-   saber o número de espécies diferentes;
-	-   listar as espécies existentes;
-	-   listar as plantas existentes, organizadas por espécie e por ano de plantação;
-	-   saber a área ocupada pelas plantas;
-	-   saber se há espaço para uma dada planta;
-	-   saber a idade média das plantas;
-	-   saber as plantas cuja idade é igual ou maior ao número médio de anos de vida da sua espécie;
-	-   gerar um gráfico com a distribuição de idades das árvores;
-	-   gerar um gráfico com a quantidade de plantas por espécie.
+-   registar plantas nesse parque, dada a sua espécie, localização e o ano de plantação;
+-   apagar plantas;
+-   listar as plantas existentes;
+-   saber o número de espécies diferentes;
+-   listar as espécies existentes;
+-   listar as plantas existentes, organizadas por espécie e por ano de plantação;
+-   saber a área ocupada pelas plantas;
+-   saber se há espaço para uma dada planta;
+-   saber a idade média das plantas;
+-   saber as plantas cuja idade é igual ou maior ao número médio de anos de vida da sua espécie;
+-   gerar um gráfico com a distribuição de idades das árvores;
+-   gerar um gráfico com a quantidade de plantas por espécie.
 
 Para cada parque é definido um ponto base, a partir do qual são calculadas todas as outras posições. Uma localização indica uma posição relativa a esse ponto base e corresponde a um par de valores decimais (x, y), em que x corresponde ao número de metros para norte e y corresponde ao número de metros para oeste
 
