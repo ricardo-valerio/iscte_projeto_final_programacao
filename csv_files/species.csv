@@ -92,3 +92,5 @@ alquequenge,persistente,True,arbusto,0.2,3
 louro das abelhas,persistente,True,arbusto,1.5,30
 begonvília,caduca,False,arbusto,0.5,8
 pessegueiro,persistente,True,árvore,3.0,20
+amendoeira,persistente,True,árvore,1.0,20
+ameixoeira,persistente,True,árvore,2.0,60

@@ -49,6 +49,13 @@ class ParkManagementExtra:
         nome_especie = InputDataValidator.get_valid_species_name(
                             input_text=input("Insira o nome da espécie a adicionar ao sistema: ")
                        )
+        especies_registadas = FileIO.read_species_file_and_return_dict()
+
+        while nome_especie in especies_registadas.keys():
+            nome_especie = InputDataValidator.get_valid_species_name(
+                                input_text=input("Essa espécie já existe no sistema, por favor insira o nome de outra espécie a adicionar ao sistema: ")
+                            )
+
         tipo_folhagem = InputDataValidator.get_valid_follage_type(
                             species_name=nome_especie,
                             input_text=input("Insira o tipo de folhagem ['persistente', 'caduca', 'semicaduca']: ")
@@ -153,9 +160,7 @@ class ParkManagementExtra:
         nome_parque = input("Indique o nome do parque a gerir: ")
         for park in self.parks:
             if nome_parque.lower() == park.name.lower():
-                # Criar instância da classe ParkManager
                 park_manager = ParkManager(park=park)
-                # Executar o menu
                 park_manager.run()
                 return
 
@@ -174,8 +179,5 @@ if __name__ == "__main__":
     classe de forma isolada.
     """
 
-    # Criar instância da classe ParkManagerExtra
     park_manager = ParkManagementExtra()
-
-    # Executar o menu
     park_manager.run()
