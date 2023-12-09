@@ -33,21 +33,21 @@ Para cada parque é definido um ponto base, a partir do qual são calculadas tod
 
 ## Project Files:
 
-│   Species.py                   ficheiro que contém a classe Species
-│   Plant.py                     ficheiro que contém a class Plant
-│   Park.py                      ficheiro que contém a classe Park
-│   FileIO.py                    ficheiro que irá lidar com input e output de ficheiros (ler e escrever ficheiros)
-│   ParkManager.py               ficheiro que contém a classe ParkManager e tem a funcionalidade para gerir um determinado parque
-│   ParkManagementExtra.py       ficheiro que contém a classe ParkManagementExtra que serve de sistema de gestão de parques
-│   InputDataValidator.py        ficheiro que irá lidar com validações (decimais positivos, strings náo vazias, etc)
-│   main.py                      ponto de entrada do programa
-│
-└───csv_files
-    │   species.csv              ficheiro que contém as espécies de plantas possíveis de serem "plantadas" (adicionadas aos parques)
-    │
-    └───parks                    pasta que irá conter os ficheiros que contém informação do parque (nome, largura, comprimento e plantas)
-            parque_do_vento.csv
-            ...etc...
+	│   Species.py                   ficheiro que contém a classe Species
+	│   Plant.py                     ficheiro que contém a class Plant
+	│   Park.py                      ficheiro que contém a classe Park
+	│   FileIO.py                    ficheiro que irá lidar com input e output de ficheiros (ler e escrever ficheiros)
+	│   ParkManager.py               ficheiro que contém a classe ParkManager e tem a funcionalidade para gerir um determinado parque
+	│   ParkManagementExtra.py       ficheiro que contém a classe ParkManagementExtra que serve de sistema de gestão de parques
+	│   InputDataValidator.py        ficheiro que irá lidar com validações (decimais positivos, strings náo vazias, etc)
+	│   main.py                      ponto de entrada do programa
+	│
+	└───csv_files
+	    │   species.csv              ficheiro que contém as espécies de plantas possíveis de serem "plantadas" (adicionadas aos parques)
+	    │
+	    └───parks                    pasta que irá conter os ficheiros que contém informação do parque (nome, largura, comprimento e plantas)
+	            parque_do_vento.csv
+	            ...etc...
 
 
 ### Dependencies
