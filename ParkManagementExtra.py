@@ -73,13 +73,11 @@ class ParkManagementExtra:
                             species_name=nome_especie,
                             input_value=input("Insira o raio da área circular de ocupação da espécie: ")
                      )
-        # print("ora ora max_radius:", max_radius)
 
         num_medio_anos_vida = InputDataValidator.get_valid_positive_avg_life(
                                     species_name=nome_especie,
                                     input_value=input("Insira o nº médio de anos de vida da espécie: ")
                               )
-        # print("ora ora num_medio_anos_vida:", num_medio_anos_vida)
 
         added_with_success = FileIO.add_species_to_file(
                                 nome_especie,

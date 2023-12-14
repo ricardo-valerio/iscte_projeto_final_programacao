@@ -33,7 +33,7 @@ class Park:
 
     def add_plant(self, planta_a_adicionar, success_prints_are_silenced=False) -> None:
         """
-            A razão pela qual não juntei as duas condições abaixo num único if
+            A razão pela qual não juntei as condições abaixo num único if
             foi para poder fazer print das mensagens específicas, caso uma
             delas não se verifique verdadeira.
         """
@@ -99,6 +99,10 @@ class Park:
 
 
     def is_plant_to_add_within_park_boundaries(self, plant_to_add):
+        """
+            função que verifica se a planta está dentro dos limites do parque,
+            tendo em consideração o raio máx. da espécie da planta a adicionar e as dimensões do parque.
+        """
         return (plant_to_add.localizacao_coords[0] + plant_to_add.especie.raio_max < self.largura and \
                 plant_to_add.localizacao_coords[1] + plant_to_add.especie.raio_max < self.comprimento) and \
                (plant_to_add.localizacao_coords[0] - plant_to_add.especie.raio_max > 0 and \
@@ -140,7 +144,6 @@ class Park:
 
 
     def get_unique_species_list(self) -> list[str, ..., str]:
-        # return list(set(plant.species for plant in self.__plants))
         lista_de_especies = list()
         for planta in self.__plants:
             lista_de_especies.append(planta.especie.nome)

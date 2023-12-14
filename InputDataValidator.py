@@ -145,7 +145,7 @@ class InputDataValidator:
         localizacao = InputDataValidator.validate_float_value(question="Localização da planta (coordenada x): "),\
                       InputDataValidator.validate_float_value(question="Localização da planta (coordenada y): ")
 
-        # verificar se a localização dada está dentro do parque
+        # verificar se a localização dada não está dentro dos limites do parque
         is_location_not_within_park_boundaries = not in_park.is_given_location_within_park_boundaries(localizacao)
 
         # verificar se a localização está ocupada

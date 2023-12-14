@@ -80,11 +80,9 @@ class ParkManager:
             print("\nℹ️ Não é possível eliminar plantas, pois não existem plantas no parque.")
             return
 
-        # pedir ao utilizador a localização da planta para a eliminar
         localizacao = float(input("Localização da planta a eliminar (coordenada x): ")),\
                       float(input("Localização da planta a eliminar (coordenada y): "))
 
-        # remover planta do parque
         self.park.remove_plant(plant_location=localizacao)
 
 
@@ -114,6 +112,7 @@ class ParkManager:
         # do enunciado:
         # loc = [(5,5), (20,5), (50,50), (60,80), (70,80), (80,80)]
         # raio = [3, 2, 6, 3, 5, 4]
+
         # https://realpython.com/list-comprehension-python/
         loc = [plant.localizacao_coords for plant in self.park.plants]
         raio = [plant.especie.raio_max for plant in self.park.plants]
